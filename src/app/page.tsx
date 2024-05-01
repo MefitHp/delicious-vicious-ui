@@ -20,7 +20,7 @@ export default async function Page() {
   );
 }
 
-export const getData = async () => {
+const getData = async () => {
   const { data } = await getClient().query({ query: GET_POSTS_QUERY });
   return {
     props: {

@@ -3,7 +3,9 @@ import { Suspense } from "react";
 import { gql, useSuspenseQuery } from "@apollo/client";
 
 export default function Page() {
-  const { data } = useSuspenseQuery(GET_POSTS_QUERY, {});
+  const { data } = useSuspenseQuery(GET_POSTS_QUERY, {
+    context: { fetchOptions: { cache: "force-cache" } },
+  });
   return (
     <>
       <Suspense fallback={<div>Loading...</div>}>

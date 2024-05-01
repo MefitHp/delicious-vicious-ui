@@ -1,5 +1,17 @@
-import getClient from "@/lib/apolloClient";
-import { gql } from "@apollo/client";
+"use client";
+import { Suspense } from "react";
+import { gql, useSuspenseQuery } from "@apollo/client";
+
+export default function Page() {
+  const { data } = useSuspenseQuery(GET_POSTS_QUERY, {});
+  return (
+    <>
+      <Suspense fallback={<div>Loading...</div>}>
+        <pre>{JSON.stringify(data, null, 2)}</pre>
+      </Suspense>
+    </>
+  );
+}
 
 const GET_POSTS_QUERY = gql`
   query Query {
@@ -10,21 +22,3 @@ const GET_POSTS_QUERY = gql`
     }
   }
 `;
-
-export default async function Page() {
-  const data = await getData();
-  return (
-    <>
-      <pre>{JSON.stringify(data, null, 2)}</pre>
-    </>
-  );
-}
-
-const getData = async () => {
-  const { data } = await getClient().query({ query: GET_POSTS_QUERY });
-  return {
-    props: {
-      data,
-    },
-  };
-};

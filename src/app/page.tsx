@@ -11,7 +11,7 @@ const GET_POSTS_QUERY = gql`
   }
 `;
 
-export async function HomePage() {
+export default async function Page() {
   const data = await getData();
   return (
     <>
@@ -28,5 +28,3 @@ export const getData = async () => {
     },
   };
 };
-
-export default HomePage;

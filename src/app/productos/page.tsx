@@ -14,7 +14,7 @@ import {
 } from "@mantine/core";
 import Image from "next/image";
 import classNames from "./Productos.module.css";
-import segmentedControlClassnames from "../../components/shared/styles/segmentedControl.module.css";
+import segmentedControlClassnames from "@/components/shared/styles/SegmentedControl.module.css";
 import { Suspense, useEffect, useState } from "react";
 import { DessertType } from "@/lib/types";
 import { useSuspenseQuery } from "@apollo/client";

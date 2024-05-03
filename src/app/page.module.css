@@ -1,0 +1,25 @@
+.card {
+  color: var(--mantine-brand-green);
+  width: 100%;
+  min-height: 50vh;
+  flex-direction: column;
+  justify-content: center;
+
+  @media (max-width: em(750px)) {
+    order: -1;
+  }
+}
+
+.imageCard {
+  width: 100%;
+  height: 500px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  box-shadow: var(--mantine-shadow-lg), var(--mantine-shadow-lg);
+}
+
+.justify-column {
+  flex-direction: column;
+  justify-content: center;
+}

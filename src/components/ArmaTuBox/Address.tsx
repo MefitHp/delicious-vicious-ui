@@ -9,7 +9,7 @@ import {
   TextInput,
 } from "@mantine/core";
 import Delivery from "./Delivery";
-import segmentedControlClassnames from "./../../components/ArmaTuBox/SelectBox.module.css";
+import segmentedControlClassnames from "@/components/shared/styles/SegmentedControl.module.css";
 import { IconInfoCircle } from "@tabler/icons-react";
 
 const Address = ({ form }: { form: any }) => {

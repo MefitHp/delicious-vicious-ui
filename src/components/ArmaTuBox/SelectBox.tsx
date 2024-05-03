@@ -9,17 +9,9 @@ import {
 } from "@mantine/core";
 import Image from "next/image";
 import classes from "./SelectBox.module.css";
+import { BoxType } from "@/lib/types";
 
-type Box = {
-  id: string;
-  size: string;
-  nombre: string;
-  imagen: {
-    url: string;
-  };
-};
-
-const SelectBox = ({ boxes, form }: { boxes: Box[]; form: any }) => {
+const SelectBox = ({ boxes, form }: { boxes: BoxType[]; form: any }) => {
   const [selectedOption, setSelectedOption] = useState<string>(
     form.values.boxId ? form.values.boxId : boxes[0].id || ""
   );
@@ -30,7 +22,7 @@ const SelectBox = ({ boxes, form }: { boxes: Box[]; form: any }) => {
     form.setFieldValue("boxSize", size);
   };
 
-  const items = boxes.map((box: Box) => {
+  const items = boxes.map((box: BoxType) => {
     const isSelected = box.id === selectedOption;
     return (
       <RadioWrapper

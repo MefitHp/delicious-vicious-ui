@@ -2,28 +2,13 @@ import type { Metadata } from "next";
 import { Box, ColorSchemeScript } from "@mantine/core";
 import Providers from "./providers";
 import Script from "next/script";
-
-// Dayjs imports
-import dayjs from "dayjs";
-import es from "dayjs/locale/es-mx";
-import utc from "dayjs/plugin/utc";
-import localizedFormat from "dayjs/plugin/localizedFormat";
-import "dayjs/locale/es-mx";
+import { Nav } from "@/components/shared";
 
 // Import Mantine styles
 import "@mantine/core/styles.css";
 import "@mantine/carousel/styles.css";
 import "@mantine/dates/styles.css";
 import "@mantine/notifications/styles.css";
-import { Nav } from "@/components/shared";
-
-// Configure dayjs
-dayjs.extend(localizedFormat);
-dayjs.extend(utc);
-dayjs.locale({
-  ...es,
-  weekStart: 1,
-});
 
 export const metadata: Metadata = {
   title: "Delicious Vicious",

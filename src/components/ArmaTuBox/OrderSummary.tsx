@@ -1,5 +1,5 @@
 import React from "react";
-import { DessertType, ProductJsonType } from "../../types";
+import { DessertType, ProductJsonType } from "@/lib/types";
 import {
   Box,
   Divider,

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { DessertType, ProductJsonType, StockType } from "../../types";
+import { DessertType, ProductJsonType, StockType } from "@/lib/types";
 import { Box, Flex, SegmentedControl } from "@mantine/core";
 import Quantity from "../Quantity";
 import segmentedControlClassnames from "./../ArmaTuBox/SelectBox.module.css";

@@ -1,5 +1,6 @@
 "use client";
 
+import React, { ReactNode } from "react";
 import { ApolloWrapper } from "@/components/ApolloWrapper";
 import { Footer } from "@/components/shared";
 import { cssResolver, theme } from "@/lib/theme";
@@ -7,7 +8,21 @@ import { MantineProvider } from "@mantine/core";
 import { DatesProvider } from "@mantine/dates";
 import { Notifications } from "@mantine/notifications";
 import { usePathname } from "next/navigation";
-import React, { ReactNode } from "react";
+
+// Dayjs imports
+import dayjs from "dayjs";
+import es from "dayjs/locale/es-mx";
+import utc from "dayjs/plugin/utc";
+import localizedFormat from "dayjs/plugin/localizedFormat";
+import "dayjs/locale/es-mx";
+
+// Configure dayjs
+dayjs.extend(localizedFormat);
+dayjs.extend(utc);
+dayjs.locale({
+  ...es,
+  weekStart: 1,
+});
 
 interface IProviders {
   children: ReactNode;

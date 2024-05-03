@@ -13,7 +13,7 @@ import {
   rem,
 } from "@mantine/core";
 import { IconPlus, IconMinus } from "@tabler/icons-react";
-import { DessertType, ProductJsonType } from "../../types";
+import { DessertType, ProductJsonType } from "@/lib/types";
 import selectBoxClasses from "./../ArmaTuBox/SelectBox.module.css";
 import classes from "./Quantity.module.css";
 

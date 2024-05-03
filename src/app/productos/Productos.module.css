@@ -1,0 +1,16 @@
+.productCard {
+  border: 3px solid var(--mantine-brand-green);
+  border-radius: 16px;
+  overflow: hidden;
+  height: 100%;
+  box-shadow: var(--mantine-shadow-md);
+}
+
+.imageWrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.productImage {
+  object-fit: cover;
+}

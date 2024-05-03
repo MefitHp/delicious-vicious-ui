@@ -47,7 +47,7 @@ export default function RootLayout({
         <Script
           async
           defer
-          src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCzguDBJ_EoMp8X9FiKUoehWDEdEOfDrc4&libraries=places&callback=initMap"
+          src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCzguDBJ_EoMp8X9FiKUoehWDEdEOfDrc4&loading=async&libraries=places&callback=initMap"
         />
       </body>
     </html>

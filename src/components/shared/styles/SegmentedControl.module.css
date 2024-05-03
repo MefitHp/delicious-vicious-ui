@@ -1,0 +1,16 @@
+.root {
+  font-family: var(--mantine-font-family-headings);
+  background-color: var(----mantine-color-white);
+  outline: 3px solid var(--mantine-brand-green);
+}
+
+.label {
+  &[data-active] {
+    color: var(--mantine-brand-light-green);
+  }
+  &:hover {
+    &[data-active] {
+      color: var(--mantine-brand-light-green);
+    }
+  }
+}

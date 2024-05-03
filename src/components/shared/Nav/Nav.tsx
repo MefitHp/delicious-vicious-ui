@@ -14,8 +14,8 @@ import NextImage from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-// import BrandLogo from "../../../../public/images/delicious-vicious-logo.png";
 import classes from "./Nav.module.css";
+import { bucketStaticPath } from "@/lib/constants";
 
 const Nav = () => {
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] =
@@ -27,15 +27,15 @@ const Nav = () => {
       <Paper shadow="md" className={classes.header}>
         <Group justify="space-between" h="100%">
           <Group>
-            {/* <Image
+            <Image
               component={NextImage}
-              // src={BrandLogo}
-              h={60}
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              fit="contain"
+              src={`${bucketStaticPath}/delicious-vicious-logo.png`}
               alt="Delicious Vicious"
-              priority
-            /> */}
+              width="0"
+              height="0"
+              sizes="100vw"
+              style={{ width: "140px", height: "auto" }}
+            />
           </Group>
           <Group h="100%" gap={0} visibleFrom="sm">
             <Link

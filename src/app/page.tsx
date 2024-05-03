@@ -6,8 +6,7 @@ import { useSuspenseQuery } from "@apollo/client";
 import { GET_BANNERS, GetBannersReponse } from "@/lib/graphql/general_queries";
 import BannerCarousel from "@/components/BannerCarousel";
 import { Suspense } from "react";
-
-const bucketStaticPath = "https://delicious-vicious.s3.amazonaws.com/static";
+import { bucketStaticPath } from "@/lib/constants";
 
 export default function Page() {
   const {

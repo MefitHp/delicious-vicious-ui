@@ -8,6 +8,12 @@ const nextConfig = {
         port: "",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "delicious-vicious.s3.amazonaws.com",
+        port: "",
+        pathname: "/**",
+      },
     ],
   },
   env: {

@@ -9,7 +9,7 @@ import { Suspense } from "react";
 
 const bucketStaticPath = "https://delicious-vicious.s3.amazonaws.com/static";
 
-export function Page() {
+export default function Page() {
   const {
     data: { portadas: banners },
   }: GetBannersReponse = useSuspenseQuery(GET_BANNERS, {
@@ -77,52 +77,3 @@ export function Page() {
     </>
   );
 }
-
-// export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-//   const context = await keystoneContext.withRequest(req, res);
-//   const data = await context.query.Portada.findMany({
-//     query: `
-//     id
-//     nombre
-//     imagen {
-//       url
-//     }
-//     `,
-//     where: { es_visible: { equals: true } },
-//   });
-
-//   return {
-//     props: {
-//       data,
-//     },
-//   };
-// };
-
-export default Page;
-
-// "use client";
-// import { Suspense } from "react";
-// import { gql, useSuspenseQuery } from "@apollo/client";
-
-// export const dynamic = "force-dynamic";
-
-// export default function Page() {
-//   const { data } = useSuspenseQuery(GET_POSTS_QUERY);
-//   return (
-//     <>
-//       <Suspense fallback={<div>Loading...</div>}>
-//         <pre>{JSON.stringify(data, null, 2)}</pre>
-//       </Suspense>
-//     </>
-//   );
-// }
-
-// const GET_POSTS_QUERY = gql`
-//   query Query {
-//     users {
-//       id
-//       name
-//       email
-//     }
-//   }
-// `;

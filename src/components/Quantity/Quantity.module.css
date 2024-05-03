@@ -1,0 +1,10 @@
+.input {
+  width: 60px;
+  text-align: center;
+}
+
+.badge {
+  @media (max-width: $mantine-breakpoint-sm) {
+    align-self: center;
+  }
+}

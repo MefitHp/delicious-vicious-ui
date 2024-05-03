@@ -1,0 +1,29 @@
+.radioWrapper {
+  transition: background-color 150ms ease, border-color 150ms ease;
+  border-radius: var(--mantine-radius-xl);
+  border: 3px solid var(--mantine-color-gray-3);
+  padding: var(--mantine-spacing-md);
+  box-shadow: var(--mantine-shadow-sm);
+
+  &[data-checked] {
+    border: 3px solid;
+    border-color: var(--mantine-brand-green);
+  }
+}
+
+.radioImage {
+  object-fit: cover;
+  border-radius: var(--mantine-radius-xl);
+}
+
+.radioGroup {
+  div[role="radiogroup"] {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+.card {
+  width: 100%;
+}

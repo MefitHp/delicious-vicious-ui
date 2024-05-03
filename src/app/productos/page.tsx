@@ -14,7 +14,7 @@ import {
 } from "@mantine/core";
 import Image from "next/image";
 import classNames from "./Productos.module.css";
-import segmentedControlClassnames from "@/components/shared/styles/segmentedControl.module.css";
+import segmentedControlClassnames from "../../components/shared/styles/segmentedControl.module.css";
 import { Suspense, useEffect, useState } from "react";
 import { DessertType } from "@/lib/types";
 import { useSuspenseQuery } from "@apollo/client";
@@ -64,7 +64,7 @@ const uniqueCategories = (desserts: DessertType[]) =>
     return acc;
   }, []);
 
-export default function ProductsPage({}) {
+export default function ProductsPage() {
   const {
     data: { productos: desserts },
   }: GetDessertsResponse = useSuspenseQuery(GET_DESSERTS, {

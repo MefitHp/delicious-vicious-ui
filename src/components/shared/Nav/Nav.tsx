@@ -88,18 +88,22 @@ const Nav = () => {
         zIndex={1000000}
       >
         <Divider my="sm" />
-        <Link href="/" className={classes.link}>
+        <Link onClick={closeDrawer} href="/" className={classes.link}>
           Inicio
         </Link>
-        <Link href="/productos" className={classes.link}>
+        <Link onClick={closeDrawer} href="/productos" className={classes.link}>
           Productos
         </Link>
-        <Link href="/" className={classes.link}>
+        <Link onClick={closeDrawer} href="/contacto" className={classes.link}>
           Contacto
         </Link>
         <Divider my="sm" />
         <Group justify="center" grow pb="xl" px="md">
-          <Link href="/arma-tu-box" className={classes.link}>
+          <Link
+            onClick={closeDrawer}
+            href="/arma-tu-box"
+            className={classes.link}
+          >
             <Button>Arma tu Box! 📦</Button>
           </Link>
         </Group>

@@ -1,0 +1,9 @@
+.day {
+  &[data-weekend] {
+    color: var(--mantine-brand-green);
+    background-color: var(--mantine-brand-light-green);
+  }
+  &[data-weekend]&:hover {
+    background-color: var(--mantine-color-green-3);
+  }
+}

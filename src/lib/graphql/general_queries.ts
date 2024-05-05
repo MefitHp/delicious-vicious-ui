@@ -61,6 +61,37 @@ export const GET_CRAFT_YOUR_BOX_DATA = gql`
   }
 `;
 
+export const GET_EDIT_STOCK_DATA = gql`
+  query getEditStockData(
+    $stockWhere: StockWhereUniqueInput!
+    $productosWhere: ProductoWhereInput!
+  ) {
+    stock(where: $stockWhere) {
+      id
+      productos
+      valido_desde
+      es_valido
+      valido_hasta
+    }
+    productos(where: $productosWhere) {
+      id
+      nombre
+      categoria {
+        id
+        nombre
+      }
+    }
+  }
+`;
+
+export const CREATE_ORDER = gql`
+  mutation CreateOrder($data: OrderCreateInput!) {
+    createOrder(data: $data) {
+      id
+    }
+  }
+`;
+
 export type GetBannersReponse = {
   data: {
     portadas: {

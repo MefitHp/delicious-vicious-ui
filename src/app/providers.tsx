@@ -14,11 +14,13 @@ import dayjs from "dayjs";
 import es from "dayjs/locale/es-mx";
 import utc from "dayjs/plugin/utc";
 import localizedFormat from "dayjs/plugin/localizedFormat";
+import timezone from "dayjs/plugin/timezone";
 import "dayjs/locale/es-mx";
 
 // Configure dayjs
 dayjs.extend(localizedFormat);
 dayjs.extend(utc);
+dayjs.extend(timezone);
 dayjs.locale({
   ...es,
   weekStart: 1,

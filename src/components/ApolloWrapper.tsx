@@ -26,6 +26,7 @@ function makeClient() {
   return new NextSSRApolloClient({
     // use the `NextSSRInMemoryCache`, not the normal `InMemoryCache`
     cache: new NextSSRInMemoryCache(),
+    connectToDevTools: true,
     link:
       typeof window === "undefined"
         ? ApolloLink.from([

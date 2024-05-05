@@ -1,34 +1,38 @@
 "use client";
 
+import { useForm } from "@mantine/form";
+import { Suspense, useState } from "react";
 import {
-  Container,
-  Title,
-  Stepper,
-  Button,
-  Group,
-  Text,
   Box,
+  Button,
+  Container,
+  Group,
+  Stepper,
+  Text,
+  Title,
   rem,
 } from "@mantine/core";
-import { Suspense, useState } from "react";
-import SelectBox from "@/components/ArmaTuBox/SelectBox";
-import { useForm } from "@mantine/form";
-
-import PickYourThreats from "@/components/ArmaTuBox/PickYourThreats";
-import dayjs from "dayjs";
-import Address from "@/components/ArmaTuBox/Address";
+import { useMutation, useSuspenseQuery } from "@apollo/client";
 import {
   IconCookie,
   IconFileDescription,
   IconMap2,
   IconPackage,
 } from "@tabler/icons-react";
-import OrderSummary from "@/components/ArmaTuBox/OrderSummary";
-// import { createOrder, updateStock } from "../../apolloClient/gqlQuery";
+import dayjs from "dayjs";
 import { useRouter } from "next/navigation";
+
+import SelectBox from "@/components/ArmaTuBox/SelectBox";
+import Address from "@/components/ArmaTuBox/Address";
+import OrderSummary from "@/components/ArmaTuBox/OrderSummary";
+import PickYourThreats from "@/components/ArmaTuBox/PickYourThreats";
+
+import {
+  CREATE_ORDER,
+  GET_CRAFT_YOUR_BOX_DATA,
+} from "@/lib/graphql/general_queries";
+import { UPDATE_STOCK } from "@/lib/graphql/stocks";
 import { BoxType, DessertType, ProductJsonType } from "@/lib/types";
-import { useSuspenseQuery } from "@apollo/client";
-import { GET_CRAFT_YOUR_BOX_DATA } from "@/lib/graphql/general_queries";
 
 function processFormValues(
   values: any,
@@ -115,13 +119,17 @@ export type GetCraftYourBoxResponse = {
   data: {
     boxes: BoxType[];
     productos: DessertType[];
-    stock: any;
+    stocks: any;
   };
 };
 
 export default function ArmaTuBox() {
   const {
-    data: { boxes, productos: desserts, stock },
+    data: {
+      boxes,
+      productos: desserts,
+      stocks: [stock],
+    },
   }: GetCraftYourBoxResponse = useSuspenseQuery(GET_CRAFT_YOUR_BOX_DATA, {
     variables: {
       where: { es_visible: { equals: true } },
@@ -129,13 +137,16 @@ export default function ArmaTuBox() {
       stocksTake: 1,
       stocksWhere: {
         es_valido: { equals: true },
-        valido_desde: { gt: dayjs().utc().startOf("week").toISOString() },
+        valido_desde: {
+          equals: dayjs().utc().startOf("week").toISOString(),
+        },
       },
     },
   });
+  const [createOrder, { loading: isLoading }] = useMutation(CREATE_ORDER);
+  const [updateStock, { loading: isStockLoading }] = useMutation(UPDATE_STOCK);
 
   const [active, setActive] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
   const [totalDesserts, setTotalDesserts] = useState<number>(0);
   const [orderProducts, setOrderProducts] = useState<ProductJsonType>({});
   const { push: redirect } = useRouter();
@@ -203,51 +214,67 @@ export default function ArmaTuBox() {
     },
   });
 
-  if (!stock || boxes.length === 0 || desserts.length === 0)
+  if (!stock || boxes.length === 0 || desserts.length === 0) {
+    const errorMessages = {
+      stock: !stock ? "No hay stock para esta semana" : null,
+      boxes: boxes.length === 0 ? "No hay cajas disponibles" : null,
+      desserts: desserts.length === 0 ? "No hay productos disponibles" : null,
+    };
+
     return (
       <Suspense fallback={<div>Loading...</div>}>
         <Container pt="lg">
           <Title variant="teal">Lo sentimos!</Title>
-          <Text>No hay stock para esta semana</Text>
+          {errorMessages.stock && (
+            <Text color="red" my="md">
+              {errorMessages.stock}
+            </Text>
+          )}
+          {errorMessages.boxes && (
+            <Text color="red" my="md">
+              {errorMessages.boxes}
+            </Text>
+          )}
+          {errorMessages.desserts && (
+            <Text color="red" my="md">
+              {errorMessages.desserts}
+            </Text>
+          )}
         </Container>
       </Suspense>
     );
+  }
 
   const onCreateOrder = async (orderData: any) => {
-    setIsLoading(true);
     const updatedStock = { ...stock.productos };
     Object.entries(orderProducts).forEach(([productId, quantity]) => {
       if (updatedStock[productId]) {
         updatedStock[productId] -= quantity;
       }
     });
-    // try {
-    //   await client.mutate({
-    //     mutation: { ...updateStock },
-    //     variables: {
-    //       where: { id: stock.id },
-    //       data: {
-    //         productos: updatedStock,
-    //       },
-    //     },
-    //   });
+    try {
+      await updateStock({
+        variables: {
+          where: { id: stock.id },
+          data: {
+            productos: updatedStock,
+          },
+        },
+      });
 
-    //   await client.mutate({
-    //     mutation: { ...createOrder },
-    //     variables: {
-    //       data: orderData,
-    //     },
-    //   });
+      await createOrder({
+        variables: {
+          data: orderData,
+        },
+      });
 
-    //   setIsLoading(false);
-    //   redirect("/arma-tu-box/pedido-realizado");
-    // } catch (err) {
-    //   if (err instanceof Error) {
-    //     // setError(err);
-    //     console.error(`unable to create order`, err);
-    //   }
-    //   setIsLoading(false);
-    // }
+      redirect("/arma-tu-box/pedido-realizado");
+    } catch (err) {
+      if (err instanceof Error) {
+        // setError(err);
+        console.error(`unable to create order`, err);
+      }
+    }
   };
 
   const nextStep = () =>
@@ -270,7 +297,6 @@ export default function ArmaTuBox() {
   const prevStep = () =>
     setActive((current) => (current > 0 ? current - 1 : current));
 
-  console.log({ form });
   return (
     <Container pt="lg">
       <Title variant="teal">Arma tu caja</Title>
@@ -328,7 +354,7 @@ export default function ArmaTuBox() {
             onClick={nextStep}
             size="lg"
             fullWidth
-            loading={isLoading}
+            loading={isLoading || isStockLoading}
             disabled={
               active === 1
                 ? totalDesserts !== Number(form.values?.boxSize)
@@ -343,7 +369,7 @@ export default function ArmaTuBox() {
           </Button>
           {active !== 0 && (
             <Button
-              disabled={isLoading}
+              disabled={isLoading || isStockLoading}
               size="lg"
               variant="default"
               onClick={prevStep}
@@ -357,58 +383,3 @@ export default function ArmaTuBox() {
     </Container>
   );
 }
-
-// export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-//   const context = await keystoneContext.withRequest(req, res);
-//   const boxes = await context.query.Box.findMany({
-//     query: `
-//       id
-//       nombre
-//       size
-//       imagen {
-//         url
-//       }
-//       `,
-//     where: { es_visible: { equals: true } },
-//   });
-
-//   const desserts = await context.query.Producto.findMany({
-//     query: `
-//     id
-//     nombre
-//     categoria {
-//       id
-//       nombre
-//     }
-//     descripcion
-//     precio
-//     imagen {
-//       url
-//     }
-//     `,
-//     where: { es_visible: { equals: true } },
-//   });
-
-//   const stock = await context.query.Stock.findMany({
-//     where: {
-//       es_valido: { equals: true },
-//       valido_desde: { gt: dayjs().utc().startOf("week").toISOString() },
-//     },
-//     take: 1,
-//     query: `
-//     id
-//     valido_desde
-//     valido_hasta
-//     productos
-//     es_valido
-//     `,
-//   });
-
-//   return {
-//     props: {
-//       boxes,
-//       desserts,
-//       stock: stock.length ? stock[0] : null,
-//     },
-//   };
-// };

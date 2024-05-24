@@ -123,6 +123,7 @@ export default function EditarStock({ params: { id } }: EditStockProps) {
           w={100}
           name="cantidad"
           value={productos[dessert.id]}
+          min={0}
           allowNegative={false}
           onChange={(value) => {
             const newProductos: ProductJsonType = {
@@ -215,8 +216,6 @@ export default function EditarStock({ params: { id } }: EditStockProps) {
               const isSelected = isInWeekRange(date, value);
               const isInRange = isHovered || isSelected;
               const isOnSaleRange = isInSaleRange(date, value);
-              if (isInRange)
-                console.log({ date, value, isHovered, isSelected });
               return {
                 onMouseEnter: () => setHovered(date),
                 onMouseLeave: () => setHovered(null),
@@ -278,39 +277,3 @@ export default function EditarStock({ params: { id } }: EditStockProps) {
     </Container>
   );
 }
-// export const getServerSideProps: GetServerSideProps = async ({
-//   req,
-//   res,
-//   query,
-// }) => {
-//   const context = await keystoneContext.withRequest(req, res);
-//   const stock = await context.query.Stock.findOne({
-//     query: `
-//     id
-//     valido_desde
-//     valido_hasta
-//     productos
-//     es_valido
-//     `,
-//     where: { id: query.id as string },
-//   });
-
-//   const desserts = await context.query.Producto.findMany({
-//     query: `
-//       id
-//       nombre
-//       categoria {
-//         id
-//         nombre
-//       }
-//       `,
-//     where: { es_visible: { equals: true } },
-//   });
-
-//   return {
-//     props: {
-//       stock,
-//       desserts,
-//     },
-//   };
-// };

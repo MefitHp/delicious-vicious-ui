@@ -1,7 +1,7 @@
 "use client";
 
 import { useForm } from "@mantine/form";
-import { Suspense, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -121,6 +121,7 @@ export type GetCraftYourBoxResponse = {
     productos: DessertType[];
     stocks: any;
   };
+  refetch: () => void;
 };
 
 export default function ArmaTuBox() {
@@ -130,6 +131,7 @@ export default function ArmaTuBox() {
       productos: desserts,
       stocks: [stock],
     },
+    refetch,
   }: GetCraftYourBoxResponse = useSuspenseQuery(GET_CRAFT_YOUR_BOX_DATA, {
     variables: {
       where: { es_visible: { equals: true } },
@@ -150,6 +152,13 @@ export default function ArmaTuBox() {
   const [totalDesserts, setTotalDesserts] = useState<number>(0);
   const [orderProducts, setOrderProducts] = useState<ProductJsonType>({});
   const { push: redirect } = useRouter();
+
+  useEffect(() => {
+    if (stock && stock.productos) {
+      refetch();
+    }
+  }, [stock, refetch]);
+
   const form = useForm({
     initialValues: {
       boxId: boxes.length ? boxes[0].id : "",
@@ -268,7 +277,9 @@ export default function ArmaTuBox() {
         },
       });
 
-      redirect("/arma-tu-box/pedido-realizado");
+      redirect(
+        `/arma-tu-box/pedido-realizado?status=success&nombre=${orderData.nombre}&email=${orderData.email}&total=${orderData.total_orden}`
+      );
     } catch (err) {
       if (err instanceof Error) {
         // setError(err);
@@ -301,7 +312,7 @@ export default function ArmaTuBox() {
     <Container pt="lg">
       <Title variant="teal">Arma tu caja</Title>
       <Suspense fallback={<div>Loading...</div>}>
-        <Stepper active={active} onStepClick={setActive} size="sm">
+        <Stepper active={active} size="sm">
           <Stepper.Step
             icon={<IconPackage style={{ width: rem(18), height: rem(18) }} />}
           >

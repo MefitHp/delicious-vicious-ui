@@ -27,15 +27,17 @@ const Nav = () => {
       <Paper shadow="md" className={classes.header}>
         <Group justify="space-between" h="100%">
           <Group>
-            <Image
-              component={NextImage}
-              src={`${bucketStaticPath}/delicious-vicious-logo.png`}
-              alt="Delicious Vicious"
-              width="0"
-              height="0"
-              sizes="100vw"
-              style={{ width: "140px", height: "auto" }}
-            />
+            <Link href="/">
+              <Image
+                component={NextImage}
+                src={`${bucketStaticPath}/delicious-vicious-logo.png`}
+                alt="Delicious Vicious"
+                width="0"
+                height="0"
+                sizes="100vw"
+                style={{ width: "140px", height: "auto" }}
+              />
+            </Link>
           </Group>
           <Group h="100%" gap={0} visibleFrom="sm">
             <Link
@@ -55,17 +57,18 @@ const Nav = () => {
               Produtos
             </Link>
             <Link
-              href="/contacto"
+              href="/como-hacer-mi-pedido"
               className={
-                currentPath === "/contacto" ? classes.linkActive : classes.link
+                currentPath === "/como-hacer-mi-pedido"
+                  ? classes.linkActive
+                  : classes.link
               }
             >
-              Contacto
+              Cómo hago mi pedido?
             </Link>
           </Group>
-
           <Group visibleFrom="sm">
-            <Link href="/arma-tu-box" className={classes.link}>
+            <Link href="/arma-tu-box">
               <Button>Arma tu Box! 📦</Button>
             </Link>
           </Group>
@@ -83,7 +86,7 @@ const Nav = () => {
         onClose={closeDrawer}
         size="100%"
         padding="md"
-        title="Navigation"
+        title="Delicios vicious"
         hiddenFrom="sm"
         zIndex={1000000}
       >
@@ -94,8 +97,12 @@ const Nav = () => {
         <Link onClick={closeDrawer} href="/productos" className={classes.link}>
           Productos
         </Link>
-        <Link onClick={closeDrawer} href="/contacto" className={classes.link}>
-          Contacto
+        <Link
+          onClick={closeDrawer}
+          href="/como-hacer-mi-pedido"
+          className={classes.link}
+        >
+          Cómo hacer mi pedido?
         </Link>
         <Divider my="sm" />
         <Group justify="center" grow pb="xl" px="md">

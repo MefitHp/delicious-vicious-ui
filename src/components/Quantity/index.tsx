@@ -16,6 +16,7 @@ import { IconPlus, IconMinus } from "@tabler/icons-react";
 import { DessertType, ProductJsonType } from "@/lib/types";
 import selectBoxClasses from "./../ArmaTuBox/SelectBox.module.css";
 import classes from "./Quantity.module.css";
+import { bucketStaticPath } from "@/lib/constants";
 
 const Quantity = ({
   dessert,
@@ -76,7 +77,7 @@ const Quantity = ({
         <Box pos="relative" h={{ base: 266, sm: 200 }}>
           <Image
             className={selectBoxClasses.radioImage}
-            src={imagen.url}
+            src={imagen?.url || `${bucketStaticPath}/LOGO_WITH_CAT.jpg`}
             fill
             sizes="(max-width: 768px) 80vh, (max-width: 1200px) 50vw, 33vw"
             alt={nombre}

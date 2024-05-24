@@ -20,6 +20,7 @@ import { DessertType } from "@/lib/types";
 import { useSuspenseQuery } from "@apollo/client";
 import { GET_DESSERTS, GetDessertsResponse } from "@/lib/graphql/desserts";
 import { IconInfoCircle } from "@tabler/icons-react";
+import { bucketStaticPath } from "@/lib/constants";
 
 const Product = ({
   nombre,
@@ -33,7 +34,7 @@ const Product = ({
       <Box pos="relative" w="100%" h={300} className={classNames.imageWrapper}>
         <Image
           className={classNames.productImage}
-          src={imagen?.url}
+          src={imagen?.url || `${bucketStaticPath}/LOGO_WITH_CAT.jpg`}
           fill
           sizes="(max-width: 768px) 80vh, (max-width: 1200px) 50vw, 33vw"
           alt={nombre}

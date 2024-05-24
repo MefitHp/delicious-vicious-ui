@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import {
   ActionIcon,
   Alert,
@@ -29,14 +29,20 @@ type GetStocksResponse = {
   data: {
     stocks: StockType[];
   };
+  refetch: () => void;
 };
 export default function Stocks() {
   const {
     data: { stocks },
+    refetch,
   }: GetStocksResponse = useSuspenseQuery(GET_STOCKS);
   const [deleteStock, { loading: isLoading }] = useMutation(DELETE_STOCK);
   const [error, setError] = useState<Error | null>(null);
   const { push: redirect } = useRouter();
+
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
 
   const rows = stocks.map((stock) => (
     <Table.Tr
@@ -87,7 +93,7 @@ export default function Stocks() {
         color: "red",
         icon: <IconCheck />,
       });
-
+      refetch();
       redirect("/stocks");
     } catch (err) {
       if (err instanceof Error) {

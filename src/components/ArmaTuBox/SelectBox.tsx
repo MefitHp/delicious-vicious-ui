@@ -10,6 +10,7 @@ import {
 import Image from "next/image";
 import classes from "./SelectBox.module.css";
 import { BoxType } from "@/lib/types";
+import { bucketStaticPath } from "@/lib/constants";
 
 const SelectBox = ({ boxes, form }: { boxes: BoxType[]; form: any }) => {
   const [selectedOption, setSelectedOption] = useState<string>(
@@ -49,7 +50,7 @@ const SelectBox = ({ boxes, form }: { boxes: BoxType[]; form: any }) => {
           >
             <Image
               className={classes.radioImage}
-              src={box.imagen.url}
+              src={box.imagen?.url || `${bucketStaticPath}/LOGO_WITH_CAT.jpg`}
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               alt={box.nombre}

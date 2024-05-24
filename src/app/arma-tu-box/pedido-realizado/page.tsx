@@ -13,7 +13,6 @@ const PedidoRealizado: React.FC = () => {
 
   const nombre = params?.get("nombre");
   const email = params?.get("email");
-  const total = params?.get("total");
 
   return (
     <Container mt="md">
@@ -73,4 +72,10 @@ const PedidoRealizado: React.FC = () => {
   );
 };
 
-export default PedidoRealizado;
+const PedidoRealizadoWithSuspense = () => (
+  <React.Suspense fallback="Cargando...">
+    <PedidoRealizado />
+  </React.Suspense>
+);
+
+export default PedidoRealizadoWithSuspense;

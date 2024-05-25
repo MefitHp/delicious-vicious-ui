@@ -1,18 +1,20 @@
 "use client";
 
 import { useForm } from "@mantine/form";
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, lazy, useEffect, useState } from "react";
 import {
   Box,
   Button,
   Container,
   Group,
+  LoadingOverlay,
   Stepper,
   Text,
   Title,
   rem,
 } from "@mantine/core";
 import { useMutation, useSuspenseQuery } from "@apollo/client";
+import { useRouter } from "next/navigation";
 import {
   IconCookie,
   IconFileDescription,
@@ -20,12 +22,14 @@ import {
   IconPackage,
 } from "@tabler/icons-react";
 import dayjs from "dayjs";
-import { useRouter } from "next/navigation";
-
-import SelectBox from "@/components/ArmaTuBox/SelectBox";
 import Address from "@/components/ArmaTuBox/Address";
-import OrderSummary from "@/components/ArmaTuBox/OrderSummary";
-import PickYourThreats from "@/components/ArmaTuBox/PickYourThreats";
+
+// Lazy load nested components
+const SelectBox = lazy(() => import("@/components/ArmaTuBox/SelectBox"));
+const OrderSummary = lazy(() => import("@/components/ArmaTuBox/OrderSummary"));
+const PickYourThreats = lazy(
+  () => import("@/components/ArmaTuBox/PickYourThreats")
+);
 
 import {
   CREATE_ORDER,
@@ -231,26 +235,24 @@ export default function ArmaTuBox() {
     };
 
     return (
-      <Suspense fallback={<div>Loading...</div>}>
-        <Container pt="lg">
-          <Title variant="teal">Lo sentimos!</Title>
-          {errorMessages.stock && (
-            <Text color="red" my="md">
-              {errorMessages.stock}
-            </Text>
-          )}
-          {errorMessages.boxes && (
-            <Text color="red" my="md">
-              {errorMessages.boxes}
-            </Text>
-          )}
-          {errorMessages.desserts && (
-            <Text color="red" my="md">
-              {errorMessages.desserts}
-            </Text>
-          )}
-        </Container>
-      </Suspense>
+      <Container pt="lg">
+        <Title variant="teal">Lo sentimos!</Title>
+        {errorMessages.stock && (
+          <Text color="red" my="md">
+            {errorMessages.stock}
+          </Text>
+        )}
+        {errorMessages.boxes && (
+          <Text color="red" my="md">
+            {errorMessages.boxes}
+          </Text>
+        )}
+        {errorMessages.desserts && (
+          <Text color="red" my="md">
+            {errorMessages.desserts}
+          </Text>
+        )}
+      </Container>
     );
   }
 
@@ -262,20 +264,27 @@ export default function ArmaTuBox() {
       }
     });
     try {
-      await updateStock({
-        variables: {
-          where: { id: stock.id },
-          data: {
-            productos: updatedStock,
-          },
-        },
+      // await updateStock({
+      //   variables: {
+      //     where: { id: stock.id },
+      //     data: {
+      //       productos: updatedStock,
+      //     },
+      //   },
+      // });
+
+      // await createOrder({
+      //   variables: {
+      //     data: orderData,
+      //   },
+      // });
+
+      const response = await fetch("/api/email/confirm_order", {
+        method: "post",
+        body: JSON.stringify(orderData),
       });
 
-      await createOrder({
-        variables: {
-          data: orderData,
-        },
-      });
+      console.log({ responseClient: response });
 
       redirect(
         `/arma-tu-box/pedido-realizado?status=success&nombre=${orderData.nombre}&email=${orderData.email}&total=${orderData.total_orden}`
@@ -311,19 +320,36 @@ export default function ArmaTuBox() {
   return (
     <Container pt="lg">
       <Title variant="teal">Arma tu caja</Title>
-      <Suspense fallback={<div>Loading...</div>}>
-        <Stepper active={active} size="sm">
-          <Stepper.Step
-            icon={<IconPackage style={{ width: rem(18), height: rem(18) }} />}
-          >
-            <Box my="md">
+
+      <Stepper active={active} size="sm">
+        <Stepper.Step
+          icon={<IconPackage style={{ width: rem(18), height: rem(18) }} />}
+        >
+          <Box my="md">
+            <Suspense
+              fallback={
+                <LoadingOverlay
+                  visible
+                  overlayProps={{ radius: "sm", blur: 2 }}
+                />
+              }
+            >
               <SelectBox boxes={boxes} form={form} />
-            </Box>
-          </Stepper.Step>
-          <Stepper.Step
-            icon={<IconCookie style={{ width: rem(18), height: rem(18) }} />}
-          >
-            <Box my="md">
+            </Suspense>
+          </Box>
+        </Stepper.Step>
+        <Stepper.Step
+          icon={<IconCookie style={{ width: rem(18), height: rem(18) }} />}
+        >
+          <Box my="md">
+            <Suspense
+              fallback={
+                <LoadingOverlay
+                  visible
+                  overlayProps={{ radius: "sm", blur: 2 }}
+                />
+              }
+            >
               <PickYourThreats
                 desserts={desserts}
                 form={form}
@@ -333,19 +359,26 @@ export default function ArmaTuBox() {
                 orderProducts={orderProducts}
                 setOrderProducts={setOrderProducts}
               />
-            </Box>
-          </Stepper.Step>
-          <Stepper.Step
-            icon={<IconMap2 style={{ width: rem(18), height: rem(18) }} />}
-          >
-            <Box my="md">
-              <Address form={form} />
-            </Box>
-          </Stepper.Step>
-          <Stepper.Step
-            icon={
-              <IconFileDescription
-                style={{ width: rem(18), height: rem(18) }}
+            </Suspense>
+          </Box>
+        </Stepper.Step>
+        <Stepper.Step
+          icon={<IconMap2 style={{ width: rem(18), height: rem(18) }} />}
+        >
+          <Box my="md">
+            <Address form={form} />
+          </Box>
+        </Stepper.Step>
+        <Stepper.Step
+          icon={
+            <IconFileDescription style={{ width: rem(18), height: rem(18) }} />
+          }
+        >
+          <Suspense
+            fallback={
+              <LoadingOverlay
+                visible
+                overlayProps={{ radius: "sm", blur: 2 }}
               />
             }
           >
@@ -354,43 +387,40 @@ export default function ArmaTuBox() {
               orderProducts={orderProducts}
               desserts={desserts}
             />
-          </Stepper.Step>
-          <Stepper.Completed>
-            <p>Order Completed</p>
-          </Stepper.Completed>
-        </Stepper>
+          </Suspense>
+        </Stepper.Step>
+      </Stepper>
 
-        <Group justify="center" my="md">
+      <Group justify="center" my="md">
+        <Button
+          onClick={nextStep}
+          size="lg"
+          fullWidth
+          loading={isLoading || isStockLoading}
+          disabled={
+            active === 1
+              ? totalDesserts !== Number(form.values?.boxSize)
+              : false
+          }
+        >
+          {active === 1
+            ? `Threats seleccionados: ${totalDesserts}/${form.values.boxSize} `
+            : active === 3
+            ? `Confirmar orden`
+            : `Siguiente`}
+        </Button>
+        {active !== 0 && (
           <Button
-            onClick={nextStep}
+            disabled={isLoading || isStockLoading}
             size="lg"
+            variant="default"
+            onClick={prevStep}
             fullWidth
-            loading={isLoading || isStockLoading}
-            disabled={
-              active === 1
-                ? totalDesserts !== Number(form.values?.boxSize)
-                : false
-            }
           >
-            {active === 1
-              ? `Threats seleccionados: ${totalDesserts}/${form.values.boxSize} `
-              : active === 3
-              ? `Confirmar orden`
-              : `Siguiente`}
+            Regresar
           </Button>
-          {active !== 0 && (
-            <Button
-              disabled={isLoading || isStockLoading}
-              size="lg"
-              variant="default"
-              onClick={prevStep}
-              fullWidth
-            >
-              Regresar
-            </Button>
-          )}
-        </Group>
-      </Suspense>
+        )}
+      </Group>
     </Container>
   );
 }

@@ -13,9 +13,11 @@ import {
   Title,
   rem,
 } from "@mantine/core";
+import { notifications } from "@mantine/notifications";
 import { useMutation, useSuspenseQuery } from "@apollo/client";
 import { useRouter } from "next/navigation";
 import {
+  IconCheck,
   IconCookie,
   IconFileDescription,
   IconMap2,
@@ -264,27 +266,34 @@ export default function ArmaTuBox() {
       }
     });
     try {
-      // await updateStock({
-      //   variables: {
-      //     where: { id: stock.id },
-      //     data: {
-      //       productos: updatedStock,
-      //     },
-      //   },
-      // });
+      await updateStock({
+        variables: {
+          where: { id: stock.id },
+          data: {
+            productos: updatedStock,
+          },
+        },
+      });
 
-      // await createOrder({
-      //   variables: {
-      //     data: orderData,
-      //   },
-      // });
+      await createOrder({
+        variables: {
+          data: orderData,
+        },
+      });
 
       const response = await fetch("/api/email/confirm_order", {
         method: "post",
         body: JSON.stringify(orderData),
       });
 
-      console.log({ responseClient: response });
+      notifications.show({
+        title: "Orden realizada!",
+        message: "Revisa tu correo electrónico",
+        autoClose: 4000,
+        position: "top-right",
+        color: "teal",
+        icon: <IconCheck />,
+      });
 
       redirect(
         `/arma-tu-box/pedido-realizado?status=success&nombre=${orderData.nombre}&email=${orderData.email}&total=${orderData.total_orden}`

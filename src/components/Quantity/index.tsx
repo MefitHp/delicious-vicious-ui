@@ -36,7 +36,8 @@ const Quantity = ({
   setOrderProducts: (value: ProductJsonType) => void;
 }) => {
   const [quantity, setQuantity] = useState(orderProducts[dessert.id] || 0);
-  const { id, nombre, descripcion, precio, imagen } = dessert;
+  const { id, nombre, descripcion, precio, imagen, imagenPlaceholder } =
+    dessert;
 
   const handleIncrease = () => {
     if (quantity < stockQuantity && totalDesserts < boxSize) {
@@ -79,8 +80,10 @@ const Quantity = ({
             className={selectBoxClasses.radioImage}
             src={imagen?.url || `${bucketStaticPath}/LOGO_WITH_CAT.jpg`}
             fill
-            sizes="(max-width: 768px) 80vh, (max-width: 1200px) 50vw, 33vw"
             alt={nombre}
+            sizes="(max-width: 576px) 100vw, (max-width: 768px) 80vw, (max-width: 992px) 50vw, (max-width: 1200px) 33vw, 25vw"
+            placeholder={imagenPlaceholder ? "blur" : "empty"}
+            blurDataURL={imagenPlaceholder ? imagenPlaceholder : undefined}
           />
         </Box>
       </Grid.Col>

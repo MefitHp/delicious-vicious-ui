@@ -44,6 +44,7 @@ export const GET_CRAFT_YOUR_BOX_DATA = gql`
         url
         id
       }
+      imagenPlaceholder
       nombre
       precio
       categoria {

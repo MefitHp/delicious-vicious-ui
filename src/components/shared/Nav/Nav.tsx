@@ -32,10 +32,11 @@ const Nav = () => {
                 component={NextImage}
                 src={`${bucketStaticPath}/delicious-vicious-logo.png`}
                 alt="Delicious Vicious"
-                width="0"
-                height="0"
-                sizes="100vw"
-                style={{ width: "140px", height: "auto" }}
+                width={650}
+                height={257}
+                sizes="(max-width: 600px) 100vw, 140px"
+                layout="intrinsic"
+                quality={75}
               />
             </Link>
           </Group>

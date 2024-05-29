@@ -168,13 +168,13 @@ export default function ArmaTuBox() {
   const form = useForm({
     initialValues: {
       boxId: boxes.length ? boxes[0].id : "",
-      deliveryType: "delivery", // "delivery" | "pickup"
+      deliveryType: "delivert", // "delivery" | "pickup"
       boxSize: boxes.length ? boxes[0].size : "",
       // Delivery fields
-      nombre: "Carlos Alfonso",
-      email: "c_alfonso@gmail.com",
-      telefono: "7711234567",
-      referencia: "Sahuan de las chivas",
+      nombre: "",
+      email: "",
+      telefono: "",
+      referencia: "",
       direccion: "",
       direccion_completa: "",
       google_maps_link: "",
@@ -260,6 +260,7 @@ export default function ArmaTuBox() {
 
   const onCreateOrder = async (orderData: any) => {
     const updatedStock = { ...stock.productos };
+
     Object.entries(orderProducts).forEach(([productId, quantity]) => {
       if (updatedStock[productId]) {
         updatedStock[productId] -= quantity;
@@ -281,7 +282,7 @@ export default function ArmaTuBox() {
         },
       });
 
-      const response = await fetch("/api/email/confirm_order", {
+      await fetch("/api/email/confirm_order", {
         method: "post",
         body: JSON.stringify(orderData),
       });

@@ -14,7 +14,7 @@ export async function POST(req: Request) {
       from: "Delicious Vicious <info@delicious-vicious.com>",
       to: body.email,
       subject: "Confirmación de orden",
-      html: render(EmailTemplate({ nombre: body.nombre })),
+      html: render(EmailTemplate(body)),
     });
 
     console.log({ response });

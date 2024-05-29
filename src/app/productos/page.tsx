@@ -28,6 +28,7 @@ const Product = ({
   descripcion,
   imagen,
   precio,
+  imagenPlaceholder,
 }: DessertType) => {
   return (
     <Flex direction="column" h="100%" className={classNames.productCard}>
@@ -36,8 +37,10 @@ const Product = ({
           className={classNames.productImage}
           src={imagen?.url || `${bucketStaticPath}/LOGO_WITH_CAT.jpg`}
           fill
-          sizes="(max-width: 768px) 80vh, (max-width: 1200px) 50vw, 33vw"
+          sizes="(max-width: 576px) 100vw, (max-width: 768px) 80vw, (max-width: 992px) 50vw, (max-width: 1200px) 33vw, 25vw"
           alt={nombre}
+          placeholder={imagenPlaceholder ? "blur" : "empty"}
+          blurDataURL={imagenPlaceholder ? imagenPlaceholder : undefined}
         />
       </Box>
       <Container py="sm" w="100%">

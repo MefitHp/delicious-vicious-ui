@@ -15,6 +15,7 @@ export const GET_DESSERTS = gql`
       imagen {
         url
       }
+      imagenPlaceholder
     }
   }
 `;

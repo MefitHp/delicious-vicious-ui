@@ -162,6 +162,7 @@ export default function ArmaTuBox() {
   const [active, setActive] = useState(0);
   const [totalDesserts, setTotalDesserts] = useState<number>(0);
   const [orderProducts, setOrderProducts] = useState<ProductJsonType>({});
+  const [isCreatingOrder, setIsCreatingOrder] = useState(false);
   const { push: redirect } = useRouter();
 
   useEffect(() => {
@@ -282,6 +283,7 @@ export default function ArmaTuBox() {
   }
 
   const onCreateOrder = async (orderData: any) => {
+    setIsCreatingOrder(true);
     const updatedStock = { ...stock.productos };
 
     Object.entries(orderProducts).forEach(([productId, quantity]) => {
@@ -318,14 +320,15 @@ export default function ArmaTuBox() {
         color: "teal",
         icon: <IconCheck />,
       });
-
+      setIsCreatingOrder(false);
       redirect(
         `/arma-tu-box/pedido-realizado?status=success&nombre=${orderData.nombre}&email=${orderData.email}&total=${orderData.total_orden}`
       );
     } catch (err) {
       if (err instanceof Error) {
-        // setError(err);
+        setIsCreatingOrder(false);
         console.error(`unable to create order`, err);
+        alert("Toma captura y envíanosla: " + err.message);
       }
     }
   };

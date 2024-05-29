@@ -25,6 +25,8 @@ import {
 } from "@tabler/icons-react";
 import dayjs from "dayjs";
 import Address from "@/components/ArmaTuBox/Address";
+import selectBoxClasses from "../../components/ArmaTuBox/SelectBox.module.css";
+import classes from "./arma-tu-box.module.css";
 
 // Lazy load nested components
 const SelectBox = lazy(() => import("@/components/ArmaTuBox/SelectBox"));
@@ -39,6 +41,8 @@ import {
 } from "@/lib/graphql/general_queries";
 import { UPDATE_STOCK } from "@/lib/graphql/stocks";
 import { BoxType, DessertType, ProductJsonType } from "@/lib/types";
+import Image from "next/image";
+import { bucketStaticPath } from "@/lib/constants";
 
 function processFormValues(
   values: any,
@@ -151,6 +155,7 @@ export default function ArmaTuBox() {
       },
     },
   });
+
   const [createOrder, { loading: isLoading }] = useMutation(CREATE_ORDER);
   const [updateStock, { loading: isStockLoading }] = useMutation(UPDATE_STOCK);
 
@@ -229,32 +234,50 @@ export default function ArmaTuBox() {
     },
   });
 
-  if (!stock || boxes.length === 0 || desserts.length === 0) {
+  const today = dayjs().utc();
+  const isOrderAllowed = today.day() >= 1 && today.day() <= 2;
+
+  if (
+    !stock ||
+    boxes.length === 0 ||
+    desserts.length === 0 ||
+    !isOrderAllowed
+  ) {
     const errorMessages = {
       stock: !stock ? "No hay stock para esta semana" : null,
       boxes: boxes.length === 0 ? "No hay cajas disponibles" : null,
       desserts: desserts.length === 0 ? "No hay productos disponibles" : null,
+      canOrder: !isOrderAllowed
+        ? "Recuerda Los lunes a las 10 AM subiremos nuestró menú a la página. De lunes a miércoles podrás agendar tu pedido."
+        : null,
     };
-
     return (
-      <Container pt="lg">
-        <Title variant="teal">Lo sentimos!</Title>
-        {errorMessages.stock && (
-          <Text color="red" my="md">
+      <div className={classes.root}>
+        <Container>
+          <Title className={classes.title}>Holaaa...</Title>
+          <Text size="lg" ta="center" className={classes.description}>
             {errorMessages.stock}
-          </Text>
-        )}
-        {errorMessages.boxes && (
-          <Text color="red" my="md">
             {errorMessages.boxes}
-          </Text>
-        )}
-        {errorMessages.desserts && (
-          <Text color="red" my="md">
             {errorMessages.desserts}
+            {errorMessages.canOrder}
           </Text>
-        )}
-      </Container>
+          <Group justify="center">
+            <Box
+              pos="relative"
+              h={{ base: 350, sm: 266 }}
+              w={{ base: "100%", sm: 400 }}
+            >
+              <Image
+                className={selectBoxClasses.radioImage}
+                src={`${bucketStaticPath}/LOGO_WITH_CAT.jpg`}
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                alt={"Logo de Delicious Vicious"}
+              />
+            </Box>
+          </Group>
+        </Container>
+      </div>
     );
   }
 

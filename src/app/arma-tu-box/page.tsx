@@ -174,7 +174,7 @@ export default function ArmaTuBox() {
   const form = useForm({
     initialValues: {
       boxId: boxes.length ? boxes[0].id : "",
-      deliveryType: "delivert", // "delivery" | "pickup"
+      deliveryType: "delivery", // "delivery" | "pickup"
       boxSize: boxes.length ? boxes[0].size : "",
       // Delivery fields
       nombre: "",

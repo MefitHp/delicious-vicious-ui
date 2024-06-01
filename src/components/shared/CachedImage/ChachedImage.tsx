@@ -1,6 +1,7 @@
 import { bucketStaticPath } from "@/lib/constants";
 import Image, { ImageProps } from "next/image";
 import { useEffect, useState } from "react";
+import { getItem, setItem, clearOldItems } from "@/lib/indexedDB";
 
 interface CachedImageProps extends Omit<ImageProps, "src"> {
   src?: string;
@@ -9,7 +10,7 @@ interface CachedImageProps extends Omit<ImageProps, "src"> {
 const getBaseUrl = (url: string) => {
   try {
     const urlObj = new URL(url);
-    const baseUrl = urlObj.pathname.replace(/^\//, "");
+    const baseUrl = urlObj.pathname;
     return baseUrl;
   } catch (error) {
     console.error("Invalid URL:", url);
@@ -34,31 +35,32 @@ const CachedImage: React.FC<CachedImageProps> = ({
   useEffect(() => {
     const fetchImage = async () => {
       const cacheKey = getBaseUrl(src);
-
-      const cachedImage = localStorage.getItem(cacheKey);
-      const lastFetch = localStorage.getItem(`${cacheKey}-last-fetch`);
-      const now = new Date().getTime();
+      const cachedImage = await getItem(cacheKey);
+      const now = Date.now();
       const cacheDuration = isStaticImage
         ? 15 * 24 * 60 * 60 * 1000
         : 3 * 24 * 60 * 60 * 1000;
 
       if (
         !cachedImage ||
-        (lastFetch && now - parseInt(lastFetch, 10) > cacheDuration)
+        (cachedImage.timestamp && now - cachedImage.timestamp > cacheDuration)
       ) {
         try {
           const response = await fetch(src);
           const blob = await response.blob();
           const imageObjectURL = URL.createObjectURL(blob);
 
-          localStorage.setItem(cacheKey, imageObjectURL);
-          localStorage.setItem(`${cacheKey}-last-fetch`, now.toString());
+          await setItem(cacheKey, { blob, timestamp: now });
           setImageUrl(imageObjectURL);
+
+          // Clear old items if needed
+          await clearOldItems(cacheDuration);
         } catch (error) {
           console.error("Error fetching image:", error);
         }
       } else {
-        setImageUrl(cachedImage);
+        const imageObjectURL = URL.createObjectURL(cachedImage.blob);
+        setImageUrl(imageObjectURL);
       }
     };
 

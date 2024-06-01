@@ -16,8 +16,10 @@ const getBaseUrl = (url: string) => {
   }
 };
 
+const defaultImage = `${bucketStaticPath}/LOGO_WITH_CAT.jpg`;
+
 const CachedImage: React.FC<CachedImageProps> = ({
-  src = `${bucketStaticPath}/LOGO_WITH_CAT.jpg`,
+  src = defaultImage,
   alt,
   className,
   sizes,
@@ -26,19 +28,19 @@ const CachedImage: React.FC<CachedImageProps> = ({
   ...rest
 }) => {
   const [imageUrl, setImageUrl] = useState<string>(src);
-  const isStaticImage = !src;
+  const isStaticImage = src === defaultImage;
 
   useEffect(() => {
     const fetchImage = async () => {
-      const baseUrl = getBaseUrl(src);
-      const cacheKey = baseUrl;
+      const cacheKey = getBaseUrl(src);
+
       const cachedImage = localStorage.getItem(cacheKey);
       const lastFetch = localStorage.getItem(`${cacheKey}-last-fetch`);
       const now = new Date().getTime();
       const cacheDuration = isStaticImage
         ? 15 * 24 * 60 * 60 * 1000
         : 3 * 24 * 60 * 60 * 1000;
-      console.log({ cachedImage });
+
       if (
         !cachedImage ||
         (lastFetch && now - parseInt(lastFetch, 10) > cacheDuration)

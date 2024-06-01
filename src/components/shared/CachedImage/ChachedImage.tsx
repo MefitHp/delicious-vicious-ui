@@ -82,6 +82,8 @@ const CachedImage: React.FC<CachedImageProps> = ({
 
     if (isMounted.current) {
       fetchImage();
+    } else {
+      isMounted.current = true;
     }
 
     return () => {

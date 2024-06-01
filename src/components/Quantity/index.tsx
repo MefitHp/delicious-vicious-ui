@@ -16,7 +16,11 @@ import { DessertType, ProductJsonType } from "@/lib/types";
 import selectBoxClasses from "./../ArmaTuBox/SelectBox.module.css";
 import classes from "./Quantity.module.css";
 import { bucketStaticPath } from "@/lib/constants";
-import CachedImage from "../shared/CachedImage";
+import dynamic from "next/dynamic";
+
+const CachedImage = dynamic(() => import("@/components/shared/CachedImage"), {
+  ssr: false,
+});
 
 const Quantity = ({
   dessert,

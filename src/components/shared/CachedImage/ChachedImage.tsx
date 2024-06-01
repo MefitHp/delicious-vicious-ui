@@ -33,6 +33,11 @@ const CachedImage: React.FC<CachedImageProps> = ({
   const isStaticImage = src === defaultImage;
 
   useEffect(() => {
+    if (typeof window === "undefined" || !("indexedDB" in window)) {
+      // IndexedDB is not available
+      return;
+    }
+
     const fetchImage = async () => {
       const cacheKey = getBaseUrl(src);
       const cachedImage = await getItem(cacheKey);

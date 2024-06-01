@@ -6,7 +6,11 @@ import { IconBrandWhatsapp, IconHome } from "@tabler/icons-react";
 import Link from "next/link";
 import { bucketStaticPath } from "@/lib/constants";
 import selectBoxClasses from "./../../../components/ArmaTuBox/SelectBox.module.css";
-import CachedImage from "@/components/shared/CachedImage";
+import dynamic from "next/dynamic";
+
+const CachedImage = dynamic(() => import("@/components/shared/CachedImage"), {
+  ssr: false,
+});
 
 const PedidoRealizado: React.FC = () => {
   const params = useSearchParams();

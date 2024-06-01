@@ -1,4 +1,4 @@
-import { openDB, DBSchema, IDBPDatabase } from "idb";
+import { openDB, DBSchema } from "idb";
 
 const DB_NAME = "imageCache";
 const STORE_NAME = "images";

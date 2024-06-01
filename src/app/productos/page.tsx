@@ -19,7 +19,11 @@ import { DessertType } from "@/lib/types";
 import { useSuspenseQuery } from "@apollo/client";
 import { GET_DESSERTS, GetDessertsResponse } from "@/lib/graphql/desserts";
 import { IconInfoCircle } from "@tabler/icons-react";
-import CachedImage from "@/components/shared/CachedImage";
+import dynamic from "next/dynamic";
+
+const CachedImage = dynamic(() => import("@/components/shared/CachedImage"), {
+  ssr: false,
+});
 
 const Product = ({
   nombre,

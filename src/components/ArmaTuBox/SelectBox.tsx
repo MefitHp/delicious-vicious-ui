@@ -10,7 +10,11 @@ import {
 import classes from "./SelectBox.module.css";
 import { BoxType } from "@/lib/types";
 import { bucketStaticPath } from "@/lib/constants";
-import CachedImage from "../shared/CachedImage";
+import dynamic from "next/dynamic";
+
+const CachedImage = dynamic(() => import("@/components/shared/CachedImage"), {
+  ssr: false,
+});
 
 const SelectBox = ({ boxes, form }: { boxes: BoxType[]; form: any }) => {
   const [selectedOption, setSelectedOption] = useState<string>(

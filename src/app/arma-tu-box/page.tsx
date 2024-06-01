@@ -41,9 +41,13 @@ import {
 } from "@/lib/graphql/general_queries";
 import { UPDATE_STOCK } from "@/lib/graphql/stocks";
 import { BoxType, DessertType, ProductJsonType } from "@/lib/types";
-import Image from "next/image";
 import { bucketStaticPath } from "@/lib/constants";
-import CachedImage from "@/components/shared/CachedImage";
+
+import dynamic from "next/dynamic";
+
+const CachedImage = dynamic(() => import("@/components/shared/CachedImage"), {
+  ssr: false,
+});
 
 function processFormValues(
   values: any,

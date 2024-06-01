@@ -50,7 +50,7 @@ const SelectBox = ({ boxes, form }: { boxes: BoxType[]; form: any }) => {
           >
             <CachedImage
               className={classes.radioImage}
-              src={box.imagen?.url || `${bucketStaticPath}/LOGO_WITH_CAT.jpg`}
+              src={box.imagen?.url || `${bucketStaticPath}/LOGO_WITH_CAT.webp`}
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               alt={box.nombre}

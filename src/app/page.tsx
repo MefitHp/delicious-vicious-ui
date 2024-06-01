@@ -69,7 +69,7 @@ export default function Page() {
         <Box
           className={classes.imageCard}
           style={{
-            backgroundImage: `url("${bucketStaticPath}/LOGO_WITH_CAT.jpg")`,
+            backgroundImage: `url("${bucketStaticPath}/LOGO_WITH_CAT.webp")`,
           }}
         />
       </SimpleGrid>

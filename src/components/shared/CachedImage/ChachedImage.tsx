@@ -9,14 +9,15 @@ interface CachedImageProps extends Omit<ImageProps, "src"> {
 const getBaseUrl = (url: string) => {
   try {
     const urlObj = new URL(url);
-    return urlObj.origin + urlObj.pathname;
+    const baseUrl = urlObj.pathname.replace(/^\//, "");
+    return baseUrl;
   } catch (error) {
     console.error("Invalid URL:", url);
     return url;
   }
 };
 
-const defaultImage = `${bucketStaticPath}/LOGO_WITH_CAT.jpg`;
+const defaultImage = `${bucketStaticPath}/LOGO_WITH_CAT.webp`;
 
 const CachedImage: React.FC<CachedImageProps> = ({
   src = defaultImage,
@@ -54,7 +55,7 @@ const CachedImage: React.FC<CachedImageProps> = ({
           localStorage.setItem(`${cacheKey}-last-fetch`, now.toString());
           setImageUrl(imageObjectURL);
         } catch (error) {
-          //   console.error("Error fetching image:", error);
+          console.error("Error fetching image:", error);
         }
       } else {
         setImageUrl(cachedImage);

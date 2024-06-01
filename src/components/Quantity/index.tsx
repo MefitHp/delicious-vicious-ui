@@ -78,7 +78,7 @@ const Quantity = ({
         <Box pos="relative" h={{ base: 266, sm: 200 }}>
           <CachedImage
             className={selectBoxClasses.radioImage}
-            src={imagen?.url || `${bucketStaticPath}/LOGO_WITH_CAT.jpg`}
+            src={imagen?.url || `${bucketStaticPath}/LOGO_WITH_CAT.webp`}
             fill
             alt={nombre}
             sizes="(max-width: 576px) 100vw, (max-width: 768px) 80vw, (max-width: 992px) 50vw, (max-width: 1200px) 33vw, 25vw"

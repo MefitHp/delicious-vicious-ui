@@ -52,7 +52,7 @@ const Product = ({
             {nombre}
           </Title>
           <Badge size="lg" color="teal" variant="outline">
-            <NumberFormatter prefix="$ " value={precio} suffix=" MXN" />
+            <NumberFormatter prefix="$" value={precio} suffix=" MXN" />
           </Badge>
         </Flex>
         <Divider my="xs" label={categoria.nombre} labelPosition="left" />

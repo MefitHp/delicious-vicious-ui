@@ -1,6 +1,6 @@
 import { bucketStaticPath } from "@/lib/constants";
 import Image, { ImageProps } from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { getItem, setItem, clearOldItems } from "@/lib/indexedDB";
 
 interface CachedImageProps extends Omit<ImageProps, "src"> {
@@ -20,6 +20,9 @@ const getBaseUrl = (url: string) => {
 
 const defaultImage = `${bucketStaticPath}/LOGO_WITH_CAT.webp`;
 
+// In-memory cache for images
+const imageCache: Map<string, string> = new Map();
+
 const CachedImage: React.FC<CachedImageProps> = ({
   src = defaultImage,
   alt,
@@ -31,15 +34,22 @@ const CachedImage: React.FC<CachedImageProps> = ({
 }) => {
   const [imageUrl, setImageUrl] = useState<string>(src);
   const isStaticImage = src === defaultImage;
+  const isMounted = useRef(false);
 
   useEffect(() => {
     if (typeof window === "undefined" || !("indexedDB" in window)) {
-      // IndexedDB is not available
       return;
     }
 
     const fetchImage = async () => {
       const cacheKey = getBaseUrl(src);
+
+      // Check the in-memory cache first
+      if (imageCache.has(cacheKey)) {
+        setImageUrl(imageCache.get(cacheKey) as string);
+        return;
+      }
+
       const cachedImage = await getItem(cacheKey);
       const now = Date.now();
       const cacheDuration = isStaticImage
@@ -56,20 +66,27 @@ const CachedImage: React.FC<CachedImageProps> = ({
           const imageObjectURL = URL.createObjectURL(blob);
 
           await setItem(cacheKey, { blob, timestamp: now });
+          imageCache.set(cacheKey, imageObjectURL); // Update in-memory cache
           setImageUrl(imageObjectURL);
 
-          // Clear old items if needed
           await clearOldItems(cacheDuration);
         } catch (error) {
           console.error("Error fetching image:", error);
         }
       } else {
         const imageObjectURL = URL.createObjectURL(cachedImage.blob);
+        imageCache.set(cacheKey, imageObjectURL); // Update in-memory cache
         setImageUrl(imageObjectURL);
       }
     };
 
-    fetchImage();
+    if (isMounted.current) {
+      fetchImage();
+    }
+
+    return () => {
+      isMounted.current = true;
+    };
   }, [src, isStaticImage]);
 
   return (

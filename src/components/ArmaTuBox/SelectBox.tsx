@@ -7,10 +7,10 @@ import {
   Title,
   UnstyledButton as RadioWrapper,
 } from "@mantine/core";
-import Image from "next/image";
 import classes from "./SelectBox.module.css";
 import { BoxType } from "@/lib/types";
 import { bucketStaticPath } from "@/lib/constants";
+import CachedImage from "../shared/CachedImage";
 
 const SelectBox = ({ boxes, form }: { boxes: BoxType[]; form: any }) => {
   const [selectedOption, setSelectedOption] = useState<string>(
@@ -48,7 +48,7 @@ const SelectBox = ({ boxes, form }: { boxes: BoxType[]; form: any }) => {
             h={{ base: 350, sm: 266 }}
             w={{ base: "100%", sm: 400 }}
           >
-            <Image
+            <CachedImage
               className={classes.radioImage}
               src={box.imagen?.url || `${bucketStaticPath}/LOGO_WITH_CAT.jpg`}
               fill

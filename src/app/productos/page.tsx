@@ -12,7 +12,6 @@ import {
   SegmentedControl,
   Title,
 } from "@mantine/core";
-import Image from "next/image";
 import classNames from "./Productos.module.css";
 import segmentedControlClassnames from "@/components/shared/styles/SegmentedControl.module.css";
 import { Suspense, useEffect, useState } from "react";
@@ -20,7 +19,7 @@ import { DessertType } from "@/lib/types";
 import { useSuspenseQuery } from "@apollo/client";
 import { GET_DESSERTS, GetDessertsResponse } from "@/lib/graphql/desserts";
 import { IconInfoCircle } from "@tabler/icons-react";
-import { bucketStaticPath } from "@/lib/constants";
+import CachedImage from "@/components/shared/CachedImage";
 
 const Product = ({
   nombre,
@@ -33,9 +32,9 @@ const Product = ({
   return (
     <Flex direction="column" h="100%" className={classNames.productCard}>
       <Box pos="relative" w="100%" h={300} className={classNames.imageWrapper}>
-        <Image
+        <CachedImage
           className={classNames.productImage}
-          src={imagen?.url || `${bucketStaticPath}/LOGO_WITH_CAT.jpg`}
+          src={imagen?.url} // src is optional now
           fill
           sizes="(max-width: 576px) 100vw, (max-width: 768px) 80vw, (max-width: 992px) 50vw, (max-width: 1200px) 33vw, 25vw"
           alt={nombre}

@@ -43,6 +43,7 @@ import { UPDATE_STOCK } from "@/lib/graphql/stocks";
 import { BoxType, DessertType, ProductJsonType } from "@/lib/types";
 import Image from "next/image";
 import { bucketStaticPath } from "@/lib/constants";
+import CachedImage from "@/components/shared/CachedImage";
 
 function processFormValues(
   values: any,
@@ -268,7 +269,7 @@ export default function ArmaTuBox() {
               h={{ base: 350, sm: 266 }}
               w={{ base: "100%", sm: 400 }}
             >
-              <Image
+              <CachedImage
                 className={selectBoxClasses.radioImage}
                 src={`${bucketStaticPath}/LOGO_WITH_CAT.jpg`}
                 fill

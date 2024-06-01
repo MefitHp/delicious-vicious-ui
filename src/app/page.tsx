@@ -4,8 +4,8 @@ import { SimpleGrid, Box, Flex, Title, Text } from "@mantine/core";
 import classes from "./page.module.css";
 import { useSuspenseQuery } from "@apollo/client";
 import { GET_BANNERS, GetBannersReponse } from "@/lib/graphql/general_queries";
-import BannerCarousel from "@/components/BannerCarousel";
-import { Suspense } from "react";
+// import BannerCarousel from "@/components/BannerCarousel";
+// import { Suspense } from "react";
 import { bucketStaticPath } from "@/lib/constants";
 
 export default function Page() {
@@ -19,9 +19,9 @@ export default function Page() {
 
   return (
     <>
-      <Suspense fallback={<div>Loading...</div>}>
+      {/* <Suspense fallback={<div>Loading...</div>}>
         {banners.length !== 0 && <BannerCarousel items={banners} />}
-      </Suspense>
+      </Suspense> */}
       <SimpleGrid cols={{ sm: 2, xs: 1 }} spacing="0">
         <Flex className={classes.card} p="xl" px={80}>
           <Title order={1}>Eat</Title>

@@ -4,9 +4,9 @@ import { Box, Button, Container, Flex, Text, Title } from "@mantine/core";
 import { useSearchParams } from "next/navigation";
 import { IconBrandWhatsapp, IconHome } from "@tabler/icons-react";
 import Link from "next/link";
-import Image from "next/image";
 import { bucketStaticPath } from "@/lib/constants";
 import selectBoxClasses from "./../../../components/ArmaTuBox/SelectBox.module.css";
+import CachedImage from "@/components/shared/CachedImage";
 
 const PedidoRealizado: React.FC = () => {
   const params = useSearchParams();
@@ -35,7 +35,7 @@ const PedidoRealizado: React.FC = () => {
             h={{ base: 350, sm: 266 }}
             w={{ base: "100%", sm: 400 }}
           >
-            <Image
+            <CachedImage
               className={selectBoxClasses.radioImage}
               src={`${bucketStaticPath}/LOGO_WITH_CAT.jpg`}
               fill

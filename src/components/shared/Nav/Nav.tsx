@@ -22,22 +22,25 @@ const Nav = () => {
     useDisclosure(false);
   const currentPath = usePathname();
 
+  const Logo = () => (
+    <Image
+      component={NextImage}
+      src={`${bucketStaticPath}/delicious-vicious-logo.png`}
+      alt="Delicious Vicious"
+      width={140}
+      height={55}
+      sizes="(max-width: 600px) 100vw, 140px"
+      quality={75}
+    />
+  );
+
   return (
     <Box>
       <Paper shadow="md" className={classes.header}>
         <Group justify="space-between" h="100%">
           <Group>
             <Link href="/">
-              <Image
-                component={NextImage}
-                src={`${bucketStaticPath}/delicious-vicious-logo.png`}
-                alt="Delicious Vicious"
-                width={650}
-                height={257}
-                sizes="(max-width: 600px) 100vw, 140px"
-                layout="intrinsic"
-                quality={75}
-              />
+              <Logo />
             </Link>
           </Group>
           <Group h="100%" gap={0} visibleFrom="sm">
@@ -87,7 +90,7 @@ const Nav = () => {
         onClose={closeDrawer}
         size="100%"
         padding="md"
-        title="Delicios vicious"
+        title={<Logo />}
         hiddenFrom="sm"
         zIndex={1000000}
       >

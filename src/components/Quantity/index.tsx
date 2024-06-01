@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Image from "next/image";
 import {
   Grid,
   Box,
@@ -17,6 +16,7 @@ import { DessertType, ProductJsonType } from "@/lib/types";
 import selectBoxClasses from "./../ArmaTuBox/SelectBox.module.css";
 import classes from "./Quantity.module.css";
 import { bucketStaticPath } from "@/lib/constants";
+import CachedImage from "../shared/CachedImage";
 
 const Quantity = ({
   dessert,
@@ -76,7 +76,7 @@ const Quantity = ({
     <Grid key={id} gutter="xs" p="md">
       <Grid.Col span={{ base: 12, sm: 4, lg: 4 }}>
         <Box pos="relative" h={{ base: 266, sm: 200 }}>
-          <Image
+          <CachedImage
             className={selectBoxClasses.radioImage}
             src={imagen?.url || `${bucketStaticPath}/LOGO_WITH_CAT.jpg`}
             fill

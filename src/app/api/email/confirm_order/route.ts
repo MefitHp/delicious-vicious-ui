@@ -17,15 +17,21 @@ export async function POST(req: Request) {
       html: render(EmailTemplate(body)),
     });
 
-    console.log({ response });
     return NextResponse.json({
       error: null,
       success: true,
     });
   } catch (error) {
-    console.error(error);
+    if (error instanceof Error) {
+      console.error("Error sending email:", error);
+      return NextResponse.json(
+        { error: "Internal Server Error Handled", details: error.message },
+        { status: 500 }
+      );
+    }
+    console.error("Error sending email:", error);
     return NextResponse.json(
-      { error: "Internal Server Error Handled" },
+      { error: "Internal Server Error Handled", details: error },
       { status: 500 }
     );
   }

@@ -296,6 +296,7 @@ export default function ArmaTuBox() {
         updatedStock[productId] -= quantity;
       }
     });
+
     try {
       await updateStock({
         variables: {
@@ -312,10 +313,20 @@ export default function ArmaTuBox() {
         },
       });
 
-      await fetch("/api/email/confirm_order", {
+      const emailResponse = await fetch("/api/email/confirm_order", {
         method: "post",
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify(orderData),
       });
+
+      const emailResult = await emailResponse.json();
+
+      if (!emailResponse.ok || emailResult.error) {
+        alert(emailResult.error || JSON.stringify(emailResult));
+        throw new Error(emailResult.error || "Failed to send email");
+      }
 
       notifications.show({
         title: "Orden realizada!",
@@ -333,7 +344,7 @@ export default function ArmaTuBox() {
       if (err instanceof Error) {
         setIsCreatingOrder(false);
         console.error(`unable to create order`, err);
-        alert("Toma captura y envíanosla: " + err.message);
+        alert("Error: " + err.message);
       }
     }
   };

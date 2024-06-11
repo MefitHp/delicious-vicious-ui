@@ -2,20 +2,25 @@
 import { SimpleGrid, Box, Flex, Title, Text } from "@mantine/core";
 
 import classes from "./page.module.css";
-import { useSuspenseQuery } from "@apollo/client";
-import { GET_BANNERS, GetBannersReponse } from "@/lib/graphql/general_queries";
+// import { useSuspenseQuery } from "@apollo/client";
+// import { GET_BANNERS, GetBannersReponse } from "@/lib/graphql/general_queries";
 // import BannerCarousel from "@/components/BannerCarousel";
 // import { Suspense } from "react";
 import { bucketStaticPath } from "@/lib/constants";
+import dynamic from "next/dynamic";
+
+const CachedImage = dynamic(() => import("@/components/shared/CachedImage"), {
+  ssr: false,
+});
 
 export default function Page() {
-  const {
-    data: { portadas: banners },
-  }: GetBannersReponse = useSuspenseQuery(GET_BANNERS, {
-    variables: {
-      where: { es_visible: { equals: true } },
-    },
-  });
+  // const {
+  //   data: { portadas: banners },
+  // }: GetBannersReponse = useSuspenseQuery(GET_BANNERS, {
+  //   variables: {
+  //     where: { es_visible: { equals: true } },
+  //   },
+  // });
 
   return (
     <>
@@ -32,20 +37,24 @@ export default function Page() {
             corporis exercitationem fugiat voluptates?
           </Text>
         </Flex>
-        <Box
-          className={classes.imageCard}
-          style={{
-            backgroundImage: `url("${bucketStaticPath}/COOKIE_BOX_CLOSED.jpg")`,
-          }}
-        />
+        <Box pos="relative">
+          <CachedImage
+            style={{ objectFit: "cover" }}
+            src={`${bucketStaticPath}/COOKIE_BOX_CLOSED.webp`}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            alt="Cookie box"
+          />
+        </Box>
       </SimpleGrid>
       <SimpleGrid cols={{ sm: 2, xs: 1 }} spacing="0">
-        <Box
-          className={classes.imageCard}
-          style={{
-            backgroundImage: `url("${bucketStaticPath}/COOKIE_BOX_CLOSEUP.jpg")`,
-          }}
-        />
+        <Box pos="relative">
+          <CachedImage
+            style={{ objectFit: "cover" }}
+            src={`${bucketStaticPath}/COOKIE_BOX_CLOSEUP.webp`}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            alt="Cookie box"
+          />
+        </Box>
         <Flex className={classes.card} p="xl" px={80}>
           <Title order={1}>Drink</Title>
           <Text size="xl">
@@ -66,12 +75,14 @@ export default function Page() {
             corporis exercitationem fugiat voluptates?
           </Text>
         </Flex>
-        <Box
-          className={classes.imageCard}
-          style={{
-            backgroundImage: `url("${bucketStaticPath}/LOGO_WITH_CAT.webp")`,
-          }}
-        />
+        <Box pos="relative">
+          <CachedImage
+            style={{ objectFit: "cover" }}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            src={`${bucketStaticPath}/LOGO_WITH_CAT.webp`}
+            alt="Cookie box"
+          />
+        </Box>
       </SimpleGrid>
     </>
   );

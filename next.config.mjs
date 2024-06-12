@@ -3,6 +3,7 @@ import { withSentryConfig } from "@sentry/nextjs";
 const nextConfig = {
   reactStrictMode: false,
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: "https",
@@ -20,6 +21,7 @@ const nextConfig = {
     deviceSizes: [576, 768, 992, 1200, 1440],
     imageSizes: [16, 32, 48, 64, 96],
   },
+
   env: {
     GRAPHQL_URI: process.env.GRAPHQL_URI,
   },

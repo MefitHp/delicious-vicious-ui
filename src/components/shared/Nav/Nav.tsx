@@ -39,12 +39,13 @@ const Nav = () => {
       <Paper shadow="md" className={classes.header}>
         <Group justify="space-between" h="100%">
           <Group>
-            <Link href="/">
+            <Link prefetch={false} href="/">
               <Logo />
             </Link>
           </Group>
           <Group h="100%" gap={0} visibleFrom="sm">
             <Link
+              prefetch={false}
               href="/"
               className={
                 currentPath === "/" ? classes.linkActive : classes.link
@@ -53,6 +54,7 @@ const Nav = () => {
               Inicio
             </Link>
             <Link
+              prefetch={false}
               href="/productos"
               className={
                 currentPath === "/productos" ? classes.linkActive : classes.link
@@ -61,6 +63,7 @@ const Nav = () => {
               Produtos
             </Link>
             <Link
+              prefetch={false}
               href="/como-hacer-mi-pedido"
               className={
                 currentPath === "/como-hacer-mi-pedido"
@@ -72,7 +75,7 @@ const Nav = () => {
             </Link>
           </Group>
           <Group visibleFrom="sm">
-            <Link href="/arma-tu-box">
+            <Link prefetch={false} href="/arma-tu-box">
               <Button>Arma tu Box! 📦</Button>
             </Link>
           </Group>
@@ -95,13 +98,24 @@ const Nav = () => {
         zIndex={1000000}
       >
         <Divider my="sm" />
-        <Link onClick={closeDrawer} href="/" className={classes.link}>
+        <Link
+          prefetch={false}
+          onClick={closeDrawer}
+          href="/"
+          className={classes.link}
+        >
           Inicio
         </Link>
-        <Link onClick={closeDrawer} href="/productos" className={classes.link}>
+        <Link
+          prefetch={false}
+          onClick={closeDrawer}
+          href="/productos"
+          className={classes.link}
+        >
           Productos
         </Link>
         <Link
+          prefetch={false}
           onClick={closeDrawer}
           href="/como-hacer-mi-pedido"
           className={classes.link}
@@ -111,6 +125,7 @@ const Nav = () => {
         <Divider my="sm" />
         <Group justify="center" grow pb="xl" px="md">
           <Link
+            prefetch={false}
             onClick={closeDrawer}
             href="/arma-tu-box"
             className={classes.link}

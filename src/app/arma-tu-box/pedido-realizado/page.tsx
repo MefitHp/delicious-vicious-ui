@@ -4,7 +4,7 @@ import { Box, Button, Container, Flex, Text, Title } from "@mantine/core";
 import { useSearchParams } from "next/navigation";
 import { IconBrandWhatsapp, IconHome } from "@tabler/icons-react";
 import Link from "next/link";
-import { bucketStaticPath } from "@/lib/constants";
+import { bucketStaticPath, phoneNumber } from "@/lib/constants";
 import selectBoxClasses from "./../../../components/ArmaTuBox/SelectBox.module.css";
 import dynamic from "next/dynamic";
 
@@ -58,7 +58,7 @@ const PedidoRealizado: React.FC = () => {
               </Button>
             </Link>
             <Link
-              href="https://web.whatsapp.com/send/?phone=6505557475"
+              href={`https://web.whatsapp.com/send/?phone=${phoneNumber}`}
               passHref
               target="_blank"
             >

@@ -14,7 +14,7 @@ import {
   Text,
 } from "@react-email/components";
 
-import { bucketStaticPath } from "@/lib/constants";
+import { bucketStaticPath, clabe, phoneNumber } from "@/lib/constants";
 
 export const EmailTemplate = ({
   nombre,
@@ -60,11 +60,11 @@ export const EmailTemplate = ({
             captura de tu depósito a nuestro whatsapp:
           </Text>
           <Text style={introText}>
-            <strong>Número de cuenta:</strong> 4122000011112222
+            <strong>Cuenta CLABE:</strong> {clabe}
           </Text>
           <Section style={{ ...buttonContainer, textAlign: "center" }}>
             <Link
-              href="https://web.whatsapp.com/send/?phone=6505557475"
+              href={`https://web.whatsapp.com/send/?phone=${phoneNumber}`}
               style={whatsappButton}
             >
               <Img

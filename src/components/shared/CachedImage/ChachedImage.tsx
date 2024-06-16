@@ -70,7 +70,7 @@ const CachedImage: React.FC<CachedImageProps> = ({
       ) {
         try {
           console.log("Fetching image from network...");
-          const response = await fetch(src);
+          const response = await fetch(src, { mode: "no-cors" });
           const blob = await response.blob();
           const imageObjectURL = URL.createObjectURL(blob);
           console.log("Image fetched from network:", imageObjectURL);

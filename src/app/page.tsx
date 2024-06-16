@@ -39,6 +39,7 @@ export default function Page() {
         </Flex>
         <Box pos="relative">
           <CachedImage
+            isStatic
             style={{ objectFit: "cover" }}
             src={`${bucketStaticPath}/COOKIE_BOX_CLOSED.webp`}
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -49,6 +50,7 @@ export default function Page() {
       <SimpleGrid cols={{ sm: 2, xs: 1 }} spacing="0">
         <Box pos="relative">
           <CachedImage
+            isStatic
             style={{ objectFit: "cover" }}
             src={`${bucketStaticPath}/COOKIE_BOX_CLOSEUP.webp`}
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -77,6 +79,7 @@ export default function Page() {
         </Flex>
         <Box pos="relative">
           <CachedImage
+            isStatic
             style={{ objectFit: "cover" }}
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             src={`${bucketStaticPath}/LOGO_WITH_CAT.webp`}

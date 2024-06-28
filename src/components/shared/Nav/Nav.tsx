@@ -29,7 +29,6 @@ const Nav = () => {
       alt="Delicious Vicious"
       width={140}
       height={55}
-      sizes="(max-width: 600px) 100vw, 140px"
       quality={75}
     />
   );
@@ -97,33 +96,39 @@ const Nav = () => {
         hiddenFrom="sm"
         zIndex={1000000}
       >
+        <Group
+          justify="center"
+          align="center"
+          style={{ flexDirection: "column" }}
+          gap="0"
+        >
+          <Link
+            prefetch={false}
+            onClick={closeDrawer}
+            href="/"
+            className={classes.link}
+          >
+            Inicio
+          </Link>
+          <Link
+            prefetch={false}
+            onClick={closeDrawer}
+            href="/productos"
+            className={classes.link}
+          >
+            Productos
+          </Link>
+          <Link
+            prefetch={false}
+            onClick={closeDrawer}
+            href="/como-hacer-mi-pedido"
+            className={classes.link}
+          >
+            Cómo hacer mi pedido?
+          </Link>
+        </Group>
         <Divider my="sm" />
-        <Link
-          prefetch={false}
-          onClick={closeDrawer}
-          href="/"
-          className={classes.link}
-        >
-          Inicio
-        </Link>
-        <Link
-          prefetch={false}
-          onClick={closeDrawer}
-          href="/productos"
-          className={classes.link}
-        >
-          Productos
-        </Link>
-        <Link
-          prefetch={false}
-          onClick={closeDrawer}
-          href="/como-hacer-mi-pedido"
-          className={classes.link}
-        >
-          Cómo hacer mi pedido?
-        </Link>
-        <Divider my="sm" />
-        <Group justify="center" grow pb="xl" px="md">
+        <Group justify="center" align="center" pb="xl">
           <Link
             prefetch={false}
             onClick={closeDrawer}

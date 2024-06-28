@@ -8,7 +8,8 @@
 .link {
   display: flex;
   align-items: center;
-  height: 60%;
+  height: 50px;
+  font-size: var(--mantine-font-size-lg);
   border-radius: var(--mantine-radius-sm);
   padding-left: var(--mantine-spacing-sm);
   padding-right: var(--mantine-spacing-sm);

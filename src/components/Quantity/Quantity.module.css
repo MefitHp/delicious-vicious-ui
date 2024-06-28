@@ -4,6 +4,7 @@
 }
 
 .badge {
+  font-size: var(--mantine-font-size-xs);
   @media (max-width: $mantine-breakpoint-sm) {
     align-self: center;
   }

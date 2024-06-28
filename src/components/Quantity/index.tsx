@@ -119,7 +119,7 @@ const Quantity = ({
               variant="outline"
               className={classes.badge}
             >
-              <NumberFormatter prefix="$ " value={precio} suffix=" MXN" />
+              <NumberFormatter prefix="$" value={precio} suffix=" MXN" />
             </Badge>
           </Flex>
         </Flex>

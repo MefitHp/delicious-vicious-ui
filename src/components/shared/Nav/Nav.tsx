@@ -23,13 +23,13 @@ const Nav = () => {
   const currentPath = usePathname();
 
   const Logo = () => (
-    <Image
-      component={NextImage}
+    <NextImage
       src={`${bucketStaticPath}/delicious-vicious-logo.png`}
       alt="Delicious Vicious"
+      style={{ objectFit: "contain" }}
       width={140}
       height={55}
-      quality={75}
+      quality={90}
     />
   );
 

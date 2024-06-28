@@ -8,8 +8,7 @@
 .link {
   display: flex;
   align-items: center;
-  height: 50px;
-  font-size: var(--mantine-font-size-lg);
+  height: 60%;
   border-radius: var(--mantine-radius-sm);
   padding-left: var(--mantine-spacing-sm);
   padding-right: var(--mantine-spacing-sm);
@@ -27,6 +26,26 @@
 
 .logoImage {
   object-fit: contain;
+}
+
+.mobileLink {
+  display: flex;
+  align-items: center;
+  height: 50px;
+  font-size: var(--mantine-font-size-lg);
+  border-radius: var(--mantine-radius-sm);
+  padding-left: var(--mantine-spacing-sm);
+  padding-right: var(--mantine-spacing-sm);
+  text-decoration: none;
+  color: light-dark(var(--mantine-brand-green), var(--mantine-color-white));
+  margin-right: var(--mantine-spacing-xs);
+
+  @mixin hover {
+    background-color: light-dark(
+      var(--mantine-color-teal-2),
+      var(--mantine-color-teal-2)
+    );
+  }
 }
 
 .linkActive {

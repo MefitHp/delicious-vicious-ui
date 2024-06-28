@@ -106,7 +106,7 @@ const Nav = () => {
             prefetch={false}
             onClick={closeDrawer}
             href="/"
-            className={classes.link}
+            className={classes.mobileLink}
           >
             Inicio
           </Link>
@@ -114,7 +114,7 @@ const Nav = () => {
             prefetch={false}
             onClick={closeDrawer}
             href="/productos"
-            className={classes.link}
+            className={classes.mobileLink}
           >
             Productos
           </Link>
@@ -122,7 +122,7 @@ const Nav = () => {
             prefetch={false}
             onClick={closeDrawer}
             href="/como-hacer-mi-pedido"
-            className={classes.link}
+            className={classes.mobileLink}
           >
             Cómo hacer mi pedido?
           </Link>
@@ -133,7 +133,7 @@ const Nav = () => {
             prefetch={false}
             onClick={closeDrawer}
             href="/arma-tu-box"
-            className={classes.link}
+            className={classes.mobileLink}
           >
             <Button>Arma tu Box! 📦</Button>
           </Link>

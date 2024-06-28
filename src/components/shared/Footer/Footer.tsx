@@ -3,8 +3,12 @@ import {
   IconBrandTwitter,
   IconBrandYoutube,
   IconBrandInstagram,
+  IconBrandFacebook,
+  IconBrandWhatsapp,
 } from "@tabler/icons-react";
 import classes from "./Footer.module.css";
+import Link from "next/link";
+import { phoneNumber } from "@/lib/constants";
 
 export default function Footer() {
   return (
@@ -17,24 +21,39 @@ export default function Footer() {
           justify="flex-end"
           wrap="nowrap"
         >
-          <ActionIcon size="lg" color="gray" variant="subtle">
-            <IconBrandTwitter
-              style={{ width: rem(18), height: rem(18) }}
-              stroke={1.5}
-            />
-          </ActionIcon>
-          <ActionIcon size="lg" color="gray" variant="subtle">
-            <IconBrandYoutube
-              style={{ width: rem(18), height: rem(18) }}
-              stroke={1.5}
-            />
-          </ActionIcon>
-          <ActionIcon size="lg" color="gray" variant="subtle">
-            <IconBrandInstagram
-              style={{ width: rem(18), height: rem(18) }}
-              stroke={1.5}
-            />
-          </ActionIcon>
+          <Link
+            href="https://www.facebook.com/profile.php?id=61557506345127"
+            target="_blank"
+          >
+            <ActionIcon size="lg" color="gray" variant="subtle">
+              <IconBrandFacebook
+                style={{ width: rem(18), height: rem(18) }}
+                stroke={1.5}
+              />
+            </ActionIcon>
+          </Link>
+          <Link
+            href="https://www.instagram.com/deliciousvicious.mx/"
+            target="_blank"
+          >
+            <ActionIcon size="lg" color="gray" variant="subtle">
+              <IconBrandInstagram
+                style={{ width: rem(18), height: rem(18) }}
+                stroke={1.5}
+              />
+            </ActionIcon>
+          </Link>
+          <Link
+            href={`https://web.whatsapp.com/send/?phone=${phoneNumber}`}
+            target="_blank"
+          >
+            <ActionIcon size="lg" color="gray" variant="subtle">
+              <IconBrandWhatsapp
+                style={{ width: rem(18), height: rem(18) }}
+                stroke={1.5}
+              />
+            </ActionIcon>
+          </Link>
         </Group>
       </Container>
     </Paper>

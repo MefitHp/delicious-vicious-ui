@@ -26,7 +26,7 @@ const Nav = () => {
     <NextImage
       src={`${bucketStaticPath}/delicious-vicious-logo.png`}
       alt="Delicious Vicious"
-      style={{ objectFit: "contain" }}
+      className={classes.logoImage}
       width={140}
       height={55}
       quality={90}

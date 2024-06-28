@@ -25,6 +25,10 @@
   }
 }
 
+.logoImage {
+  object-fit: contain;
+}
+
 .linkActive {
   display: flex;
   align-items: center;

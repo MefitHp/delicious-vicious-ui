@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Box, ColorSchemeScript } from "@mantine/core";
+import NextTopLoader from "nextjs-toploader";
 import Providers from "./providers";
 import Script from "next/script";
 import { Nav } from "@/components/shared";
@@ -25,6 +26,7 @@ export default function RootLayout({
         <ColorSchemeScript />
       </head>
       <body>
+        <NextTopLoader color="#37614c" />
         <Providers>
           <Nav />
           <Box mih="calc(100vh - 60px - 100px)">{children}</Box>

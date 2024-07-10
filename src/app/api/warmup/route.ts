@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request, res: Response) {
-  const url = "https://www.delicious-vicious.com/productos";
+  const url = "https://delicious-vicious-admin.onrender.com/api/graphql";
 
   // Create a timeout promise
   const timeout = new Promise((_, reject) =>

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import puppeteer from "puppeteer";
 
-export default async function GET(req: NextRequest): Promise<NextResponse> {
+export async function GET(req: NextRequest): Promise<NextResponse> {
   if (req.method !== "GET") {
     return NextResponse.json(
       { message: "Only GET requests allowed" },

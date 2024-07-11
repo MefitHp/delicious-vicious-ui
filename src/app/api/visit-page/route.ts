@@ -45,7 +45,6 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     // Return a success response
     return NextResponse.json({
       message: "URL visited successfully",
-      screenshot,
     });
   } catch (error: any) {
     console.error("Error visiting URL:", error);

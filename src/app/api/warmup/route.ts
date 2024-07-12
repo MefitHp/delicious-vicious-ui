@@ -19,7 +19,7 @@ async function fetchWithTimeout(url: string, timeout: number): Promise<string> {
 }
 
 export async function GET(req: Request): Promise<NextResponse> {
-  const url = "https://delicious-vicious-admin.onrender.com/api/graphql";
+  const url = "https://www.delicious-vicious.com/productos";
 
   // Create a timeout promise to ensure the total execution doesn't exceed 25 seconds
   const totalTimeout = new Promise(

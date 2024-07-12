@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import puppeteer from "puppeteer";
+import { visitPage } from "./visitPage"; // Update with the correct path to the visitPage function
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
   if (req.method !== "GET") {
@@ -9,55 +9,20 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     );
   }
 
-  const url = "https://www.delicious-vicious.com/productos"; // Replace with your desired URL
+  const url = "https://delicious-vicious-admin.onrender.com/signin"; // Replace with your desired URL
 
-  // Timeout in milliseconds (2 minutes)
-  const timeout = 120000;
+  // Timeout in milliseconds (3 minutes for Puppeteer)
+  const puppeteerTimeout = 180000;
 
-  try {
-    // Launch a new browser instance
-    const browser = await puppeteer.launch({
-      headless: true,
-      args: ["--no-sandbox", "--disable-setuid-sandbox"],
-    });
-    const page = await browser.newPage();
-
-    // Set a timeout for the page.goto and networkidle2
-    const responsePromise = page.goto(url, {
-      waitUntil: "networkidle2",
-      timeout: timeout,
-    });
-
-    // Create a timeout promise to handle long-loading pages
-    const timeoutPromise = new Promise<null>((_, reject) =>
-      setTimeout(() => reject(new Error("Timeout")), timeout)
+  // Call the visitPage function asynchronously
+  (async () => {
+    await visitPage(url, puppeteerTimeout).catch((error: any) =>
+      console.error("Background task error:", error)
     );
+  })();
 
-    // Race between the responsePromise and the timeoutPromise
-    await Promise.race([responsePromise, timeoutPromise]);
-
-    // Optionally take a screenshot
-    const screenshot = await page.screenshot({ encoding: "base64" });
-
-    // Close the browser
-    await browser.close();
-
-    // Return a success response
-    return NextResponse.json({
-      message: "URL visited successfully",
-    });
-  } catch (error: any) {
-    console.error("Error visiting URL:", error);
-    if (error.message === "Timeout") {
-      return NextResponse.json(
-        { message: "Request timed out" },
-        { status: 408 }
-      ); // 408 Request Timeout
-    } else {
-      return NextResponse.json(
-        { message: "An error occurred", error: error.message },
-        { status: 500 }
-      );
-    }
-  }
+  // Return a quick response within 25 seconds
+  return NextResponse.json({
+    message: "Visit task started",
+  });
 }

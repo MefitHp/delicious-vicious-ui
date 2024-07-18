@@ -126,6 +126,7 @@ const OrderSummary = ({
             fontWeight: "bold",
             fontSize: "1.2em",
             textAlign: "right",
+            paddingRight: 18,
           }}
         >
           Total: {""}

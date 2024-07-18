@@ -28,7 +28,7 @@ export default function Page() {
         {banners.length !== 0 && <BannerCarousel items={banners} />}
       </Suspense> */}
       <SimpleGrid cols={{ sm: 2, xs: 1 }} spacing="0">
-        <Flex className={classes.card} p="xl" px={80}>
+        <Flex className={classes.card} p="md" px={80}>
           <Title order={1}>Eat</Title>
           <Text size="xl">
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque
@@ -37,7 +37,7 @@ export default function Page() {
             corporis exercitationem fugiat voluptates?
           </Text>
         </Flex>
-        <Box pos="relative">
+        <Box pos="relative" mih={500}>
           <CachedImage
             isStatic
             style={{ objectFit: "cover" }}
@@ -48,7 +48,7 @@ export default function Page() {
         </Box>
       </SimpleGrid>
       <SimpleGrid cols={{ sm: 2, xs: 1 }} spacing="0">
-        <Box pos="relative">
+        <Box pos="relative" mih={500}>
           <CachedImage
             isStatic
             style={{ objectFit: "cover" }}
@@ -57,7 +57,7 @@ export default function Page() {
             alt="Cookie box"
           />
         </Box>
-        <Flex className={classes.card} p="xl" px={80}>
+        <Flex className={classes.card} p="md" px={80}>
           <Title order={1}>Drink</Title>
           <Text size="xl">
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque
@@ -68,7 +68,7 @@ export default function Page() {
         </Flex>
       </SimpleGrid>
       <SimpleGrid cols={{ sm: 2, xs: 1 }} spacing="0">
-        <Flex className={classes.card} p="xl" px={80}>
+        <Flex className={classes.card} p="md" px={80}>
           <Title order={1}>Enjoy</Title>
           <Text size="xl">
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque
@@ -77,7 +77,7 @@ export default function Page() {
             corporis exercitationem fugiat voluptates?
           </Text>
         </Flex>
-        <Box pos="relative">
+        <Box pos="relative" mih={500}>
           <CachedImage
             isStatic
             style={{ objectFit: "cover" }}

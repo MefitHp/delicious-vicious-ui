@@ -64,7 +64,7 @@ const PickYourThreats = ({
       style={{ overflow: "hidden" }}
       direction="column"
     >
-      <Flex justify="center" mt="xs">
+      <Flex justify="center" mt="xs" mb={3}>
         <SegmentedControl
           classNames={segmentedControlClassnames}
           value={selectedCategory}
@@ -74,7 +74,7 @@ const PickYourThreats = ({
           data={["Todos", ...uniqueCategories(desserts)]}
         />
       </Flex>
-      <Box p="lg" style={{ overflowY: "auto" }}>
+      <Box p="md" style={{ overflowY: "auto" }}>
         {items}
       </Box>
     </Flex>

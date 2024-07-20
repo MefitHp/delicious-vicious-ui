@@ -200,7 +200,7 @@ export default function ArmaTuBox() {
           referencia:
             values.referencia.trim().length < 5 ? "Referencia inválida" : null,
           direccion: !values.direccion.trim().length
-            ? "Selecciona una ubicación"
+            ? "Dirección inválida"
             : null,
           diaEntrega: !values.diaEntrega ? "Selecciona un día" : null,
           horaEntrega: !values.horaEntrega ? "Selecciona una hora" : null,
@@ -448,7 +448,7 @@ export default function ArmaTuBox() {
           onClick={nextStep}
           size="lg"
           fullWidth
-          loading={isLoading || isStockLoading}
+          loading={isLoading || isStockLoading || isCreatingOrder}
           disabled={
             active === 1
               ? totalDesserts !== Number(form.values?.boxSize)

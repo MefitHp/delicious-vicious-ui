@@ -1,13 +1,16 @@
 "use client";
 import { SimpleGrid, Box, Flex, Title, Text } from "@mantine/core";
+import { useMediaQuery } from "@mantine/hooks";
 
-import classes from "./page.module.css";
 import { useSuspenseQuery } from "@apollo/client";
+import { Suspense } from "react";
+import dynamic from "next/dynamic";
+
 import { GET_BANNERS, GetBannersReponse } from "@/lib/graphql/general_queries";
 import BannerCarousel from "@/components/BannerCarousel";
-import { Suspense } from "react";
 import { bucketStaticPath } from "@/lib/constants";
-import dynamic from "next/dynamic";
+import { BannerType } from "@/lib/types";
+import classes from "./page.module.css";
 
 const CachedImage = dynamic(() => import("@/components/shared/CachedImage"), {
   ssr: false,
@@ -15,17 +18,32 @@ const CachedImage = dynamic(() => import("@/components/shared/CachedImage"), {
 
 export default function Page() {
   const {
-    data: { portadas: banners },
+    data: { portadas },
   }: GetBannersReponse = useSuspenseQuery(GET_BANNERS, {
     variables: {
       where: { es_visible: { equals: true } },
     },
   });
 
+  const isMobile = useMediaQuery("(max-width: 750em)");
+
+  const portraitBanners = portadas.filter(
+    (portada: BannerType) => portada.es_vertical
+  );
+
+  const wideBanners = portadas.filter(
+    (portada: BannerType) => !portada.es_vertical
+  );
+  console.log({ isMobile });
   return (
     <>
       <Suspense fallback={<div>Loading...</div>}>
-        {banners.length !== 0 && <BannerCarousel items={banners} />}
+        {portraitBanners.length !== 0 && (
+          <BannerCarousel items={portraitBanners} isPortrait={true} />
+        )}
+        {wideBanners.length !== 0 && (
+          <BannerCarousel items={wideBanners} isPortrait={false} />
+        )}
       </Suspense>
       <SimpleGrid cols={{ sm: 2, xs: 1 }} spacing="0">
         <Flex className={classes.card}>
@@ -56,7 +74,7 @@ export default function Page() {
             alt="Cookie box"
           />
         </Box>
-        <Flex className={classes.card} px={80}>
+        <Flex className={classes.card}>
           <Title>Perfectas para cada ocasión</Title>
           <Text size="xl">
             Nuestras delicias son perfectas para cualquier ocasión, desde
@@ -66,7 +84,7 @@ export default function Page() {
         </Flex>
       </SimpleGrid>
       <SimpleGrid cols={{ sm: 2, xs: 1 }} spacing="0">
-        <Flex className={classes.card} px={80}>
+        <Flex className={classes.card}>
           <Title>Únete a nosotros</Title>
           <Text size="xl">
             Sweetaholics orgullosos! Abrazamos nuestra pasión por los sabores

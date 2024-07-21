@@ -1,4 +1,5 @@
 import { gql } from "@apollo/client";
+import { BannerType } from "../types";
 
 export const GET_USERS = gql`
   query Query {
@@ -15,6 +16,7 @@ export const GET_BANNERS = gql`
     portadas(where: $where) {
       id
       nombre
+      es_vertical
       imagen {
         url
       }
@@ -95,12 +97,6 @@ export const CREATE_ORDER = gql`
 
 export type GetBannersReponse = {
   data: {
-    portadas: {
-      id: string;
-      nombre: string;
-      imagen: {
-        url: string;
-      };
-    }[];
+    portadas: BannerType[];
   };
 };

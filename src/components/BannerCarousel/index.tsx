@@ -15,9 +15,10 @@ function Card({ imagen }: BannerType) {
   );
 }
 
-const BannerCarousel = ({ items }: any) => {
+const BannerCarousel = ({ items, isPortrait }: any) => {
   return (
     <Carousel
+      className={isPortrait ? classes.portraitBanner : classes.wideBanner}
       withIndicators
       slideSize={{ base: "100%", sm: "100%" }}
       slideGap={{ base: rem(2), sm: "xl" }}

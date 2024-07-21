@@ -28,3 +28,21 @@
   top: 0;
   left: 0;
 }
+
+.portraitBanner {
+  display: none;
+}
+
+.wideBanner {
+  display: block;
+}
+
+@media (max-width: em(750px)) {
+  .portraitBanner {
+    display: block;
+  }
+
+  .wideBanner {
+    display: none;
+  }
+}

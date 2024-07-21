@@ -241,7 +241,7 @@ export default function ArmaTuBox() {
   });
 
   const today = dayjs().utc();
-  // const isOrderAllowed = today.day() >= 1 && today.day() <= 3;
+  // TODO: const isOrderAllowed = today.day() >= 1 && today.day() <= 3;
   const isOrderAllowed = true;
   if (
     !stock ||

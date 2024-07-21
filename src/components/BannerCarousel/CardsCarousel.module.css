@@ -9,26 +9,6 @@
   position: relative;
 }
 
-.title {
-  color: var(--mantine-brand-green);
-  font-size: rem(32px);
-}
-
-.category {
-  color: var(--mantine-color-white);
-  font-weight: 700;
-}
-
-.overlay {
-  padding: 30px;
-  background-color: rgba(0, 0, 0, 0.25);
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-}
-
 .portraitBanner {
   display: none;
 }
@@ -45,4 +25,13 @@
   .wideBanner {
     display: none;
   }
+}
+
+.control {
+  background: white;
+  width: 35px;
+}
+
+.indicator {
+  background-color: white;
 }

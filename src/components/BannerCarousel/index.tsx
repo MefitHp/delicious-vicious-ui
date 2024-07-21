@@ -24,6 +24,7 @@ const BannerCarousel = ({ items, isPortrait }: any) => {
       slideGap={{ base: rem(2), sm: "xl" }}
       align="start"
       slidesToScroll={1}
+      classNames={classes}
     >
       {items.map((item: BannerType) => (
         <Carousel.Slide key={item.id}>

@@ -34,7 +34,7 @@ export default function Page() {
   const wideBanners = portadas.filter(
     (portada: BannerType) => !portada.es_vertical
   );
-  console.log({ isMobile });
+
   return (
     <>
       <Suspense fallback={<div>Loading...</div>}>

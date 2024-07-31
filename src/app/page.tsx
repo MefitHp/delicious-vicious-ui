@@ -47,11 +47,12 @@ export default function Page() {
       </Suspense>
       <SimpleGrid cols={{ sm: 2, xs: 1 }} spacing="0">
         <Flex className={classes.card}>
-          <Title>¡Bienvenidos a Delicious Vicious!</Title>
+          <Title>NOS DECLARAMOS SWEETAHOLICS</Title>
           <Text size="xl">
-            Nos apasiona crear galletas estilo NY y brownies decadentes que te
-            dejarán sin aliento. Cada bocado está lleno de sabor y textura, ¡te
-            garantizamos que te dejarán queriendo más!
+            Celebramos la alegría de cada mordisco, el éxtasis de cada bocado
+            azucarado y la inquebrantable devoción por lo dulce. Sabemos que hay
+            quienes nos llaman adictos, pero nosotros preferimos considerarnos
+            amantes fervientes de los placeres azucarados.
           </Text>
         </Flex>
         <Box pos="relative" mih={500}>
@@ -75,21 +76,27 @@ export default function Page() {
           />
         </Box>
         <Flex className={classes.card}>
-          <Title>Perfectas para cada ocasión</Title>
+          {/* <Title>Perfectas para cada ocasión</Title> */}
           <Text size="xl">
-            Nuestras delicias son perfectas para cualquier ocasión, desde
-            celebraciones hasta simplemente darse un capricho después de un
-            largo día.
+            Abrazamos nuestra pasión por los sabores caramelizados, los
+            esponjosos brownies y las tentadoras texturas. Sabemos que es un
+            amor incondicional y decidimos no resistirnos a él. ¿Quién puede
+            negar el poder de una crujiente galleta o el abrazo cálido de un
+            brownie recién horneado? Nosotros elegimos deleitarnos con esta
+            locura dulce, porque sabemos que una vida sin dulzura es como una
+            carcajada sin risa.
           </Text>
         </Flex>
       </SimpleGrid>
       <SimpleGrid cols={{ sm: 2, xs: 1 }} spacing="0">
         <Flex className={classes.card}>
-          <Title>Únete a nosotros</Title>
+          {/* <Title>Únete a nosotros</Title> */}
           <Text size="xl">
-            Sweetaholics orgullosos! Abrazamos nuestra pasión por los sabores
-            caramelizados, los esponjosos brownies y las tentadoras texturas.
-            Sabemos que es un amor incondicional y elegimos no resistirnos a el.
+            En este mundo, no hay límites para nuestras creaciones. Desde las
+            galletas clásicas que nos transportan a la nostalgia de la infancia,
+            hasta los brownies innovadores que desafían todas las expectativas,
+            estamos aquí para demostrar que ser adicto a lo dulce puede ser algo
+            maravilloso.
           </Text>
         </Flex>
         <Box pos="relative" mih={500}>

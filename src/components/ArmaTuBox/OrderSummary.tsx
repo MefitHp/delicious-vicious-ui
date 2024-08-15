@@ -109,7 +109,17 @@ const OrderSummary = ({
               {form.values.referencia}
             </Text>
           </>
-        ) : null}
+        ) : (
+          <>
+            <Divider />
+            <Text span>
+              <Text fw={700} span>
+                Día de pickup:{" "}
+              </Text>
+              {form.values.diaEntrega}
+            </Text>
+          </>
+        )}
       </Stack>
       <Table horizontalSpacing="lg" verticalSpacing="lg" captionSide="bottom">
         <Table.Thead>

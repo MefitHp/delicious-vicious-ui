@@ -21,6 +21,7 @@ import "dayjs/locale/es-mx";
 dayjs.extend(localizedFormat);
 dayjs.extend(utc);
 dayjs.extend(timezone);
+dayjs.tz.setDefault("America/Mexico_City");
 dayjs.locale({
   ...es,
   weekStart: 1,

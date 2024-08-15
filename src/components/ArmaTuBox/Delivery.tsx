@@ -16,6 +16,7 @@ import GoogleMap, { MapOptions } from "google-maps-react-markers";
 import { notifications } from "@mantine/notifications";
 import { IconMapPinFilled } from "@tabler/icons-react";
 import dayjs from "dayjs";
+import { days, isDayDisabled } from "@/lib/date_utils";
 
 interface Coordinates {
   place_id?: string;
@@ -161,16 +162,24 @@ const Delivery = ({ form }: { form: any }) => {
           placeholder="Ej. Frente a la plaza"
           {...form.getInputProps("referencia")}
         />
-        <SimpleGrid cols={{ sm: 2, xs: 1 }} spacing="sm">
+        <SimpleGrid
+          cols={{ sm: 2, xs: 1 }}
+          spacing="sm"
+          display="grid"
+          style={{ alignItems: "end" }}
+        >
           <Select
             label="Día de entrega"
             placeholder="Selecciona un día"
+            description="Para entregas el día siguiente, has tu pedido antes de las 6 PM"
             required
-            data={[
-              dayjs().utc().day(4).format("dddd, DD [de] MMMM"),
-              dayjs().utc().day(5).format("dddd, DD [de] MMMM"),
-              dayjs().utc().day(6).format("dddd, DD [de] MMMM"),
-            ]}
+            allowDeselect={false}
+            data={Object.keys(days).map((dayName) => {
+              return {
+                value: dayjs(days[dayName]).format("dddd, DD [de] MMMM"),
+                disabled: isDayDisabled(days[dayName]),
+              };
+            })}
             {...form.getInputProps("diaEntrega")}
           />
           <Select
@@ -197,11 +206,6 @@ const Delivery = ({ form }: { form: any }) => {
               "05:30 PM",
               "06:00 PM",
               "06:30 PM",
-              "07:00 PM",
-              "07:30 PM",
-              "08:00 PM",
-              "08:30 PM",
-              "09:00 PM",
             ]}
             {...form.getInputProps("horaEntrega")}
           />

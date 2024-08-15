@@ -19,21 +19,15 @@ import {
   Title,
   Tooltip,
 } from "@mantine/core";
-import { Calendar, DateInput } from "@mantine/dates";
+import { Calendar } from "@mantine/dates";
 import { notifications } from "@mantine/notifications";
+import { useRouter } from "next/navigation";
 import { IconCheck, IconInfoCircle } from "@tabler/icons-react";
-
-import {
-  endOfStockValidity,
-  isInSaleRange,
-  isInWeekRange,
-  startOfStockValidity,
-} from "@/lib/date_utils";
 import { GET_DESSERTS, GetDessertsResponse } from "@/lib/graphql/desserts";
 import { CREATE_STOCK } from "@/lib/graphql/stocks";
 import { DessertType, ProductJsonType, StockType } from "@/lib/types";
 import { useMutation, useSuspenseQuery } from "@apollo/client";
-import { useRouter } from "next/navigation";
+import { endOfWeek, isInWeekRange, startOfWeek } from "@/lib/date_utils";
 import calendarStyles from "../CalendarStyles.module.css";
 
 function generateDessertObject(desserts: DessertType[]) {
@@ -57,8 +51,8 @@ export default function Crear() {
     },
   });
   const [createStock, { loading: isLoading }] = useMutation(CREATE_STOCK);
-  const [hovered, setHovered] = useState<Date | null>(null);
-  const [value, setValue] = useState<Date | null>(null);
+  const [hoveredDays, setHoveredDays] = useState<Date | null>(null);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [error, setError] = useState<Error | null>(null);
   const [stockData, setStockData] = useState<Omit<StockType, "id">>({
     valido_desde: null,
@@ -173,7 +167,7 @@ export default function Crear() {
               <Input
                 value={
                   valido_desde
-                    ? dayjs(valido_desde).utc().format("DD-MMMM-YY - hh:mm a")
+                    ? dayjs(valido_desde).tz().format("DD-MMMM-YY - hh:mm a")
                     : "No seleccionado"
                 }
                 error={!valido_desde}
@@ -185,7 +179,7 @@ export default function Crear() {
               <Input
                 value={
                   valido_hasta
-                    ? dayjs(valido_hasta).utc().format("DD-MMMM-YY - hh:mm a")
+                    ? dayjs(valido_hasta).tz().format("DD-MMMM-YY - hh:mm a")
                     : "No seleccionado"
                 }
                 required
@@ -211,31 +205,24 @@ export default function Crear() {
           <Calendar
             withCellSpacing={false}
             classNames={calendarStyles}
-            getDayProps={(rawDate) => {
-              const date = dayjs(rawDate).utc().startOf("date").toDate();
-
-              const isHovered = isInWeekRange(date, hovered);
-              const isSelected = isInWeekRange(date, value);
+            getDayProps={(date) => {
+              const isHovered = isInWeekRange(date, hoveredDays);
+              const isSelected = isInWeekRange(date, selectedDate);
               const isInRange = isHovered || isSelected;
-              const isOnSaleRange = isInSaleRange(date, value);
-
               return {
-                onMouseEnter: () => setHovered(date),
-                onMouseLeave: () => setHovered(null),
+                onMouseEnter: () => setHoveredDays(date),
+                onMouseLeave: () => setHoveredDays(null),
                 inRange: isInRange,
                 firstInRange: isInRange && date.getDay() === 1,
-                lastInRange: isInRange && date.getDay() === 3,
+                lastInRange: isInRange && date.getDay() === 5,
                 selected: isSelected,
-                weekend: isOnSaleRange,
                 onClick: (e) => {
                   setStockData({
                     ...stockData,
-                    valido_desde: startOfStockValidity(date, true),
-                    valido_hasta: dayjs(endOfStockValidity(date))
-                      .utc()
-                      .toDate(),
+                    valido_desde: startOfWeek(date),
+                    valido_hasta: endOfWeek(date),
                   });
-                  setValue(date);
+                  setSelectedDate(date);
                 },
               };
             }}

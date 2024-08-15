@@ -53,8 +53,12 @@ export default function Stocks() {
           : "var(--mantine-color-green-light)"
       }
     >
-      <Table.Td>{dayjs(stock.valido_desde).utc().format("LLL")}</Table.Td>
-      <Table.Td>{dayjs(stock.valido_hasta).utc().format("LLL")}</Table.Td>
+      <Table.Td>
+        {dayjs(stock.valido_desde).tz().format("dddd D MMMM YYYY, hh:mm A")}
+      </Table.Td>
+      <Table.Td>
+        {dayjs(stock.valido_hasta).tz().format("dddd D MMMM YYYY, hh:mm A")}
+      </Table.Td>
 
       <Table.Td>{stock.es_valido ? "Si" : "No"}</Table.Td>
       <Table.Td>

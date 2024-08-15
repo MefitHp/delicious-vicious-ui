@@ -1,16 +1,19 @@
 "use client";
 import React, { useState } from "react";
+import dayjs from "dayjs";
 import {
   Alert,
   Flex,
   SegmentedControl,
+  Select,
   Stack,
   Text,
   TextInput,
 } from "@mantine/core";
-import Delivery from "./Delivery";
-import segmentedControlClassnames from "@/components/shared/styles/SegmentedControl.module.css";
+import { days, isDayDisabled } from "@/lib/date_utils";
 import { IconInfoCircle } from "@tabler/icons-react";
+import segmentedControlClassnames from "@/components/shared/styles/SegmentedControl.module.css";
+import Delivery from "./Delivery";
 
 const Address = ({ form }: { form: any }) => {
   const [deliveryType, setDeliveryType] = useState<"delivery" | "pickup">(
@@ -75,6 +78,20 @@ const Address = ({ form }: { form: any }) => {
               label="Quién hace el pedido?"
               placeholder="Ej. Juán Perez"
               {...form.getInputProps("nombre")}
+            />
+            <Select
+              label="Día de entrega"
+              placeholder="Selecciona un día"
+              description="Para entregas el día siguiente, has tu pedido antes de las 6 PM"
+              required
+              allowDeselect={false}
+              data={Object.keys(days).map((dayName) => {
+                return {
+                  value: dayjs(days[dayName]).format("dddd, DD [de] MMMM"),
+                  disabled: isDayDisabled(days[dayName]),
+                };
+              })}
+              {...form.getInputProps("diaEntrega")}
             />
             <TextInput
               withAsterisk

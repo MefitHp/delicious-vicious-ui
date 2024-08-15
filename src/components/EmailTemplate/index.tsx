@@ -93,7 +93,7 @@ export const EmailTemplate = ({
               <Text style={informationTableValue}>{telefono}</Text>
             </Column>
           </Row>
-          {tipo_entrega === "Delivery" && (
+          {tipo_entrega === "Delivery" ? (
             <>
               <Row style={informationTableRow}>
                 <Column style={informationTableColumn}>
@@ -125,6 +125,13 @@ export const EmailTemplate = ({
                 </Column>
               </Row>
             </>
+          ) : (
+            <Row style={informationTableRow}>
+              <Column style={informationTableColumn}>
+                <Text style={informationTableLabel}>Fecha de pickup</Text>
+                <Text style={informationTableValue}>{dia_entrega}</Text>
+              </Column>
+            </Row>
           )}
           <Row style={informationTableRow}>
             <Column style={informationTableColumn}>

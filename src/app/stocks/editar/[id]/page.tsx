@@ -22,12 +22,7 @@ import { IconCheck, IconInfoCircle } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { DessertType, ProductJsonType, StockType } from "@/lib/types";
-import {
-  endOfStockValidity,
-  isInSaleRange,
-  isInWeekRange,
-  startOfStockValidity,
-} from "@/lib/date_utils";
+import { endOfWeek, isInWeekRange, startOfWeek } from "@/lib/date_utils";
 
 import calendarStyles from "../../CalendarStyles.module.css";
 
@@ -35,7 +30,6 @@ import { notifications } from "@mantine/notifications";
 import { useMutation, useSuspenseQuery } from "@apollo/client";
 import { GET_EDIT_STOCK_DATA } from "@/lib/graphql/general_queries";
 import { UPDATE_STOCK } from "@/lib/graphql/stocks";
-import { convertStringToUTCDate } from "@/lib/utils";
 
 type GetDessertsResponse = {
   data: {
@@ -61,8 +55,8 @@ export default function EditarStock({ params: { id } }: EditStockProps) {
   const [updateStock, { loading: isLoading }] = useMutation(UPDATE_STOCK);
   const [hovered, setHovered] = useState<Date | null>(null);
   const [value, setValue] = useState<Date | null>(
-    typeof stock.valido_desde === "string"
-      ? convertStringToUTCDate(stock.valido_desde)
+    stock.valido_desde
+      ? dayjs(stock.valido_desde).tz().toDate()
       : stock.valido_desde
   );
   const [error, setError] = useState<Error | null>(null);
@@ -178,7 +172,7 @@ export default function EditarStock({ params: { id } }: EditStockProps) {
             </Box>
             <Input.Wrapper label="Valido desde: ">
               <Input
-                value={dayjs(valido_desde).utc().format("DD-MMMM-YY - hh:mm a")}
+                value={dayjs(valido_desde).tz().format("DD-MMMM-YY - hh:mm a")}
                 error={!valido_desde}
                 required
                 readOnly
@@ -186,7 +180,7 @@ export default function EditarStock({ params: { id } }: EditStockProps) {
             </Input.Wrapper>
             <Input.Wrapper label="Valido hasta: ">
               <Input
-                value={dayjs(valido_hasta).utc().format("DD-MMMM-YY - hh:mm a")}
+                value={dayjs(valido_hasta).tz().format("DD-MMMM-YY - hh:mm a")}
                 error={!valido_hasta}
                 required
                 readOnly
@@ -210,29 +204,22 @@ export default function EditarStock({ params: { id } }: EditStockProps) {
           <Calendar
             withCellSpacing={false}
             classNames={calendarStyles}
-            getDayProps={(rawDate) => {
-              const date = dayjs(rawDate).utc().startOf("date").toDate();
+            getDayProps={(date) => {
               const isHovered = isInWeekRange(date, hovered);
               const isSelected = isInWeekRange(date, value);
               const isInRange = isHovered || isSelected;
-              const isOnSaleRange = isInSaleRange(date, value);
               return {
                 onMouseEnter: () => setHovered(date),
                 onMouseLeave: () => setHovered(null),
                 inRange: isInRange,
-                firstInRange: isInRange && date.getDay() === 0,
-                lastInRange: isInRange && date.getDay() === 3,
+                firstInRange: isInRange && date.getDay() === 1,
+                lastInRange: isInRange && date.getDay() === 5,
                 selected: isSelected,
-                weekend: isOnSaleRange,
                 onClick: (e) => {
                   setStockData({
                     ...stockData,
-                    valido_desde: dayjs(startOfStockValidity(date, true))
-                      .utc()
-                      .toDate(),
-                    valido_hasta: dayjs(endOfStockValidity(date))
-                      .utc()
-                      .toDate(),
+                    valido_desde: startOfWeek(date),
+                    valido_hasta: endOfWeek(date),
                   });
                   setValue(date);
                 },

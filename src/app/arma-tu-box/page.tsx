@@ -115,6 +115,7 @@ function processFormValues(
       email,
       telefono,
       tipo_entrega: deliveryType === "delivery" ? "Delivery" : "Pickup",
+      dia_entrega: diaEntrega,
       productos: orderProductsSummary,
       total_orden: order_total,
       box: {
@@ -155,7 +156,7 @@ export default function ArmaTuBox() {
       stocksWhere: {
         es_valido: { equals: true },
         valido_desde: {
-          equals: dayjs().utc().startOf("week").toISOString(),
+          equals: dayjs().tz().startOf("week").toISOString(),
         },
       },
     },
@@ -240,8 +241,12 @@ export default function ArmaTuBox() {
     },
   });
 
-  const today = dayjs().utc();
+  const today = dayjs().tz();
+  // Entregas de martes a sábado
+  // Pedidos de lunes a miércoles hasta las 6 PM
+
   // TODO: const isOrderAllowed = today.day() >= 1 && today.day() <= 3;
+  console.log(today.format("LLL"));
   const isOrderAllowed = true;
   if (
     !stock ||
@@ -254,7 +259,7 @@ export default function ArmaTuBox() {
       boxes: boxes.length === 0 ? "No hay cajas disponibles" : null,
       desserts: desserts.length === 0 ? "No hay productos disponibles" : null,
       canOrder: !isOrderAllowed
-        ? "Recuerda Los lunes a las 10 AM subiremos nuestró menú a la página. De lunes a miércoles podrás agendar tu pedido."
+        ? "Recuerda que los Lunes a las 10 AM subiremos nuestró menú a la página. Podrás agendar tu pedido desde Lunes a las 10 AM hasta los Viernes a las 6 PM."
         : null,
     };
     return (

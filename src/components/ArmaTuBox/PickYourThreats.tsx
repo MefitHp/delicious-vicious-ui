@@ -30,21 +30,38 @@ const PickYourThreats = ({
   setOrderProducts: (value: ProductJsonType) => void;
 }) => {
   const {
-    values: { boxSize },
+    values: { boxSize, boxCategoryId, boxCategoryName },
   } = form;
+
   const [filteredDesserts, setFilteredDesserts] =
     useState<DessertType[]>(desserts);
-  const [selectedCategory, setSelectedCategory] = useState<string>("Todos");
+  const [selectedCategory, setSelectedCategory] = useState<string>(
+    boxCategoryName ? boxCategoryName : "Todos"
+  );
+
+  // If there's no box category selected, exclude the desserts that are sold by box
 
   useEffect(() => {
-    if (selectedCategory === "Todos") {
-      return setFilteredDesserts(desserts);
+    if (boxCategoryId) {
+      // If there's a box category selected, filter the desserts by that category
+      const filteredDesserts = desserts.filter((dessert: DessertType) => {
+        return dessert?.categoria?.id === boxCategoryId;
+      });
+      setFilteredDesserts(filteredDesserts);
+    } else {
+      const dessersList = desserts.filter(
+        (dessert) => !dessert.categoria?.se_vende_por_caja
+      );
+      // From the remaining desserts, filter by selected category
+      if (selectedCategory === "Todos") {
+        return setFilteredDesserts(dessersList);
+      }
+      const filteredByCategory = dessersList.filter(
+        (dessert: DessertType) => dessert.categoria.nombre === selectedCategory
+      );
+      setFilteredDesserts(filteredByCategory);
     }
-    const filteredDesserts = desserts.filter(
-      (dessert: DessertType) => dessert.categoria.nombre === selectedCategory
-    );
-    setFilteredDesserts(filteredDesserts);
-  }, [selectedCategory, desserts]);
+  }, [selectedCategory, desserts, boxCategoryId]);
 
   const items = filteredDesserts.map((dessert) => (
     <Quantity
@@ -71,7 +88,20 @@ const PickYourThreats = ({
           onChange={(value) => setSelectedCategory(value)}
           color="teal"
           radius="xl"
-          data={["Todos", ...uniqueCategories(desserts)]}
+          data={
+            boxCategoryName
+              ? [`${boxCategoryName}`]
+              : [
+                  "Todos",
+                  ...uniqueCategories(
+                    boxCategoryId
+                      ? desserts
+                      : desserts.filter(
+                          (dessert) => !dessert.categoria?.se_vende_por_caja
+                        )
+                  ),
+                ]
+          }
         />
       </Flex>
       <Box p="md" style={{ overflowY: "auto" }}>

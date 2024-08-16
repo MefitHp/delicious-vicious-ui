@@ -3,9 +3,9 @@ import {
   Box,
   Flex,
   Radio,
-  Text,
   Title,
   UnstyledButton as RadioWrapper,
+  Stack,
 } from "@mantine/core";
 import classes from "./SelectBox.module.css";
 import { BoxType } from "@/lib/types";
@@ -16,15 +16,30 @@ const CachedImage = dynamic(() => import("@/components/shared/CachedImage"), {
   ssr: false,
 });
 
-const SelectBox = ({ boxes, form }: { boxes: BoxType[]; form: any }) => {
+const SelectBox = ({
+  boxes,
+  form,
+  resetCounters,
+}: {
+  boxes: BoxType[];
+  form: any;
+  resetCounters: () => void;
+}) => {
   const [selectedOption, setSelectedOption] = useState<string>(
     form.values.boxId ? form.values.boxId : boxes[0].id || ""
   );
 
-  const handleOptionSelect = (id: string, size: string) => {
-    setSelectedOption(id);
-    form.setFieldValue("boxId", id);
-    form.setFieldValue("boxSize", size);
+  const handleOptionSelect = (box: BoxType) => {
+    setSelectedOption(box.id);
+    form.setFieldValue("boxId", box.id);
+    form.setFieldValue("boxSize", box.size);
+    form.setFieldValue("boxCategoryId", box.categoria?.id);
+    form.setFieldValue("boxCategoryName", box.categoria?.nombre);
+    form.setFieldValue(
+      "boxCategorySellsByBox",
+      box.categoria?.se_vende_por_caja
+    );
+    resetCounters();
   };
 
   const items = boxes.map((box: BoxType) => {
@@ -32,7 +47,7 @@ const SelectBox = ({ boxes, form }: { boxes: BoxType[]; form: any }) => {
     return (
       <RadioWrapper
         key={box.id}
-        onClick={() => handleOptionSelect(box.id, box.size)}
+        onClick={() => handleOptionSelect(box)}
         data-checked={isSelected || undefined}
         className={classes.radioWrapper}
       >
@@ -68,21 +83,21 @@ const SelectBox = ({ boxes, form }: { boxes: BoxType[]; form: any }) => {
             justify="center"
             h={{ base: 150, sm: "auto" }}
           >
-            <Box>
+            <Box px="sm">
               <Title order={3} variant="green">
                 {box.nombre}
               </Title>
-              <Text>
-                <Title order={3} c="gray.9" component="span">
-                  Incluye{" "}
-                  <Text span c="green" inherit>
-                    {box.size}
-                  </Text>{" "}
-                  piezas
-                </Title>
-              </Text>
+              <Stack gap={0}>
+                {box.descripcion && (
+                  <>
+                    <Title order={4} c="gray.9" component="span" fw="unset">
+                      {box.descripcion}
+                    </Title>
+                  </>
+                )}
+              </Stack>
             </Box>
-            <Box p="xl" opacity={isSelected ? 1 : 0}>
+            <Box opacity={isSelected ? 1 : 0} style={{ fontSize: 40 }}>
               🍪
             </Box>
           </Flex>

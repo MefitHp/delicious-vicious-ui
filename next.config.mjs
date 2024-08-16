@@ -23,7 +23,7 @@ const nextConfig = {
   },
 
   env: {
-    GRAPHQL_URI: process.env.GRAPHQL_URI,
+    GRAPHQL_URI: process.env.GRAPHQL_URI || "http://localhost:3000/api/graphql",
   },
 };
 

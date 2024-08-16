@@ -9,5 +9,6 @@ export type DessertType = {
   categoria: {
     id: number;
     nombre: string;
+    se_vende_por_caja: boolean;
   };
 };

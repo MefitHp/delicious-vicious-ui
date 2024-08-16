@@ -38,6 +38,11 @@ export const GET_CRAFT_YOUR_BOX_DATA = gql`
       imagen {
         url
       }
+      categoria {
+        id
+        nombre
+      }
+      descripcion
     }
     productos(where: $productosWhere) {
       id
@@ -52,6 +57,7 @@ export const GET_CRAFT_YOUR_BOX_DATA = gql`
       categoria {
         id
         nombre
+        se_vende_por_caja
       }
     }
     stocks(take: $stocksTake, where: $stocksWhere) {

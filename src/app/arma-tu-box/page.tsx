@@ -171,6 +171,10 @@ export default function ArmaTuBox() {
   const [isCreatingOrder, setIsCreatingOrder] = useState(false);
   const { push: redirect } = useRouter();
 
+  const resetCounters = () => {
+    setTotalDesserts(0);
+    setOrderProducts({});
+  };
   useEffect(() => {
     if (stock && stock.productos) {
       refetch();
@@ -391,7 +395,11 @@ export default function ArmaTuBox() {
                 />
               }
             >
-              <SelectBox boxes={boxes} form={form} />
+              <SelectBox
+                boxes={boxes}
+                form={form}
+                resetCounters={resetCounters}
+              />
             </Suspense>
           </Box>
         </Stepper.Step>

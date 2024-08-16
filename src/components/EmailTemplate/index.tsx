@@ -63,10 +63,7 @@ export const EmailTemplate = ({
             <strong>Cuenta CLABE:</strong> {clabe}
           </Text>
           <Section style={{ ...buttonContainer, textAlign: "center" }}>
-            <Link
-              href={`https://web.whatsapp.com/send/?phone=${phoneNumber}`}
-              style={whatsappButton}
-            >
+            <Link href={`https://wa.me/${phoneNumber}`} style={whatsappButton}>
               <Img
                 src={`${bucketStaticPath}/whatsapp_icon.png`}
                 width="16"

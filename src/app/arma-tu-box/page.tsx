@@ -151,7 +151,10 @@ export default function ArmaTuBox() {
   }: GetCraftYourBoxResponse = useSuspenseQuery(GET_CRAFT_YOUR_BOX_DATA, {
     variables: {
       where: { es_visible: { equals: true } },
-      productosWhere: { es_visible: { equals: true } },
+      productosWhere: {
+        categoria: { id: { not: null } },
+        es_visible: { equals: true },
+      },
       stocksTake: 1,
       stocksWhere: {
         es_valido: { equals: true },

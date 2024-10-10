@@ -76,7 +76,10 @@ export default function ProductsPage() {
     data: { productos: desserts },
   }: GetDessertsResponse = useSuspenseQuery(GET_DESSERTS, {
     variables: {
-      where: { es_visible: { equals: true } },
+      where: {
+        categoria: { id: { not: null } },
+        es_visible: { equals: true },
+      },
     },
   });
   const [filteredDesserts, setFilteredDesserts] =

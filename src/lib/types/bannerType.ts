@@ -4,5 +4,5 @@ export type BannerType = {
   descripcion: string;
   imagen: { url: string };
   es_visible: boolean;
-  es_vertical: boolean;
+  es_version_movil: boolean;
 };

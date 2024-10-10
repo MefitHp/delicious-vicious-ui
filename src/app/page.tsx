@@ -28,11 +28,11 @@ export default function Page() {
   const isMobile = useMediaQuery("(max-width: 750em)");
 
   const portraitBanners = portadas.filter(
-    (portada: BannerType) => portada.es_vertical
+    (portada: BannerType) => portada.es_version_movil
   );
 
   const wideBanners = portadas.filter(
-    (portada: BannerType) => !portada.es_vertical
+    (portada: BannerType) => !portada.es_version_movil
   );
 
   return (

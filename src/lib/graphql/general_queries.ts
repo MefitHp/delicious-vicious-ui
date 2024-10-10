@@ -16,7 +16,7 @@ export const GET_BANNERS = gql`
     portadas(where: $where) {
       id
       nombre
-      es_vertical
+      es_version_movil
       imagen {
         url
       }
